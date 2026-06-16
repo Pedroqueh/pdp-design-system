@@ -1,0 +1,2988 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDP Suite — Design System</title>
+
+  <!-- ============================================================
+       SAP ICON PATHS — embebidos inline, sin dependencia de CDN
+       Extraídos de @ui5/webcomponents-icons v2.23.0 (v5)
+       viewBox "0 0 16 16" para todos
+  ============================================================ -->
+  <script>
+    const SAP_ICONS = {
+      "edit":             "M11.621.515a1.75 1.75 0 0 1 2.48 0l1.383 1.388a1.752 1.752 0 0 1-.004 2.477L4.03 15.781A.751.751 0 0 1 3.5 16H.75a.75.75 0 0 1-.75-.75v-2.751a.75.75 0 0 1 .219-.53L11.62.515ZM1.808 12.498l1.691 1.692 7.936-7.9-1.743-1.712-7.884 7.92Zm11.23-10.924a.25.25 0 0 0-.354 0l-1.932 1.94 1.746 1.716 1.924-1.914a.25.25 0 0 0 0-.353l-1.384-1.389Z",
+      "show":             "M8.004 2c3.12 0 5.67 2.323 7.35 4.754.178.259.646.908.646 1.25 0 .341-.468.983-.646 1.242-1.68 2.43-4.23 4.754-7.35 4.754-3.12 0-5.67-2.323-7.35-4.754C.477 8.988 0 8.324 0 7.996c0-.331.476-.984.655-1.242C2.334 4.324 4.884 2 8.005 2Zm0 1.5c-1.87 0-3.5 1.136-4.719 2.396C2.686 6.516 1.628 8 1.628 8s1.058 1.484 1.657 2.104c1.219 1.26 2.848 2.396 4.72 2.396 1.87 0 3.5-1.136 4.718-2.396C13.68 9.045 14.38 8 14.38 8s-.564-.938-1.656-2.104C11.504 4.636 9.875 3.5 8.004 3.5Zm0 1.5a3.001 3.001 0 1 1 .001 6.002 3.001 3.001 0 0 1 0-6.002Zm0 1.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z",
+      "delete":           "M10.25 0C11.216 0 12 .784 12 1.75V3.5h2.25a.75.75 0 0 1 0 1.5h-.75v9.25A1.75 1.75 0 0 1 11.75 16h-7.5a1.75 1.75 0 0 1-1.741-1.571L2.5 5h-.75a.75.75 0 0 1 0-1.5H4V1.75C4 .784 4.784 0 5.75 0h4.5ZM4.005 14.3a.25.25 0 0 0 .245.2h7.5a.25.25 0 0 0 .25-.25V5H4l.005 9.3ZM6.25 7a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5A.75.75 0 0 1 6.25 7Zm3.5 0a.75.75 0 0 1 .75.75v4.5a.75.75 0 0 1-1.5 0v-4.5A.75.75 0 0 1 9.75 7Zm-4-5.5a.25.25 0 0 0-.25.25V3.5h5V1.75a.25.25 0 0 0-.25-.25h-4.5Z",
+      "search":           "M7 1a6 6 0 0 1 4.738 9.678l3.042 3.042a.75.75 0 1 1-1.06 1.06l-3.042-3.042A6 6 0 1 1 7 1Zm0 1.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z",
+      "appointment-2":    "M11.25 0a.75.75 0 0 1 .75.75V2c1.583 0 3 1.058 3 2.75v8.5A2.75 2.75 0 0 1 12.25 16h-8.5A2.75 2.75 0 0 1 1 13.25v-8.5C1 3.058 2.417 2 4 2V.75a.75.75 0 0 1 1.5 0V2h5V.75a.75.75 0 0 1 .75-.75ZM2.5 13.25c0 .69.56 1.25 1.25 1.25h8.5c.69 0 1.25-.56 1.25-1.25V7.5h-11v5.75ZM5 10a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm3 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm3 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2ZM2.5 4.75V6h11V4.75c0-.868-.741-1.25-1.5-1.25v.75a.75.75 0 0 1-1.5 0V3.5h-5v.75a.75.75 0 0 1-1.5 0V3.5c-.759 0-1.5.382-1.5 1.25Z",
+      "browse-folder":    "M10.346 7a3.347 3.347 0 0 1 2.836 5.121l.003.003 2.596 2.596a.752.752 0 0 1-1.061 1.061l-2.596-2.596-.003-.003A3.347 3.347 0 1 1 10.346 7ZM6.5 1c.199 0 .39.08.53.22L8.31 2.5h4.94A2.75 2.75 0 0 1 16 5.25a.75.75 0 0 1-1.5 0c0-.69-.56-1.25-1.25-1.25H8a.75.75 0 0 1-.53-.22L6.19 2.5H2.75c-.69 0-1.25.56-1.25 1.25v8.5c0 .69.56 1.25 1.25 1.25h2.5a.75.75 0 0 1 0 1.5h-2.5A2.75 2.75 0 0 1 0 12.25v-8.5A2.75 2.75 0 0 1 2.75 1H6.5Zm3.846 7.5a1.846 1.846 0 1 0 0 3.692 1.846 1.846 0 0 0 0-3.692Z",
+      "key":              "M4.777 0a4.739 4.739 0 0 1 4.779 4.777v1.301l6.224 6.225c.14.14.22.331.22.53v2.417a.75.75 0 0 1-.75.75H13c-.57 0-.752-.576-.964-1H10.75a.75.75 0 0 1-.75-.75v-.75H8.75a.75.75 0 0 1-.75-.75v-.765L7.264 12a.773.773 0 0 1-.764-.75v-1.19l-.56-.56H4.75C2.087 9.5 0 7.454 0 4.777A4.739 4.739 0 0 1 4.777 0Zm0 1.5A3.239 3.239 0 0 0 1.5 4.777C1.5 6.612 2.902 8 4.75 8l1.647.015a.75.75 0 0 1 .383.205l1 1c.14.14.22.331.22.53v.735l.736-.012a.757.757 0 0 1 .764.75V12h1.25a.75.75 0 0 1 .75.75v.75l1.105.008c.503.071.662.598.859.992H14.5v-1.356L8.275 6.919a.75.75 0 0 1-.22-.53V4.777A3.24 3.24 0 0 0 4.778 1.5ZM4.75 3.25c.827 0 1.5.673 1.5 1.5s-.673 1.5-1.5 1.5-1.5-.673-1.5-1.5.673-1.5 1.5-1.5Z",
+      "synchronize":      "M4.25 10a.75.75 0 0 1 0 1.5H2.118c1.409 1.823 3.647 3 5.882 3 2.754 0 5.345-1.543 6.575-4.077a.75.75 0 0 1 1.35.654C14.435 14.147 11.305 16 8 16c-2.435 0-4.821-1.127-6.5-2.917v1.167a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 .75 10h3.5ZM8 0a8.864 8.864 0 0 1 6.5 2.834V1.75a.75.75 0 0 1 1.5 0v3.5a.75.75 0 0 1-.75.75h-3.5a.75.75 0 0 1 0-1.5h2.179c-1.37-1.887-3.59-3-5.929-3-2.657 0-5.318 1.663-6.585 4.097a.75.75 0 0 1-1.33-.694C1.598 2 4.757 0 8 0Z",
+      "generate-shortcut":"M12.25 1A2.75 2.75 0 0 1 15 3.75v8.5A2.75 2.75 0 0 1 12.25 15h-.5a.75.75 0 0 1 0-1.5h.5c.69 0 1.25-.56 1.25-1.25V6.5h-11v5.75c0 .69.56 1.25 1.25 1.25h.5a.75.75 0 0 1 0 1.5h-.5A2.75 2.75 0 0 1 1 12.25v-8.5A2.75 2.75 0 0 1 3.75 1h8.5ZM8.558 8.248l2.25 2.5a.75.75 0 0 1-1.116 1.004l-.942-1.048v3.546a.75.75 0 0 1-1.5 0v-3.546l-.942 1.048a.75.75 0 0 1-1.116-1.004l2.25-2.5a.758.758 0 0 1 1.116 0ZM3.75 2.5c-.69 0-1.25.56-1.25 1.25V5h11V3.75c0-.69-.56-1.25-1.25-1.25h-8.5Z",
+      "message-success":  "M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm1.68 4.262a.75.75 0 0 1 1.14.976l-3 3.5a.758.758 0 0 1-1.1.042l-1.5-1.5a.75.75 0 1 1 1.06-1.06l.927.926 2.474-2.884Z",
+      "message-error":    "M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm1.72 3.72a.75.75 0 0 1 1.06 1.06L9.06 8l1.72 1.72a.75.75 0 0 1-1.06 1.06L8 9.06l-1.72 1.72a.75.75 0 0 1-1.06-1.06L6.94 8 5.22 6.28a.75.75 0 1 1 1.06-1.06L8 6.94l1.72-1.72Z",
+      "message-warning":  "M6.491 1.856a1.75 1.75 0 0 1 3.01-.001l6.248 10.504c.694 1.166-.147 2.644-1.504 2.644H1.752c-1.357 0-2.197-1.478-1.504-2.644L6.491 1.856Zm1.72.766a.25.25 0 0 0-.43 0L1.536 13.126a.25.25 0 0 0 .215.377h12.493a.25.25 0 0 0 .215-.377L8.211 2.622ZM8 10.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2ZM8 5a.75.75 0 0 1 .75.75v2.993A.756.756 0 0 1 8 9.5a.755.755 0 0 1-.756-.75l.006-3A.75.75 0 0 1 8 5Z",
+      "heatmap-chart":    "M7.625 13.25a1.375 1.375 0 1 1 0 2.75 1.375 1.375 0 0 1 0-2.75ZM.875 14a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Zm3.25 0a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Zm7.25 0a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Zm3.5 0a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75ZM7.75 9.5a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5Zm-3.375.5a1.375 1.375 0 1 1 0 2.75 1.375 1.375 0 0 1 0-2.75Zm7 0a1.375 1.375 0 1 1 0 2.75 1.375 1.375 0 0 1 0-2.75Zm-10.5.25a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Zm14 0a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75ZM11.25 6a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5Zm-6.875.25a1.375 1.375 0 1 1 0 2.75 1.375 1.375 0 0 1 0-2.75Zm3.25 0a1.375 1.375 0 1 1 0 2.75 1.375 1.375 0 0 1 0-2.75ZM.875 7a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Zm14 0a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Zm-7.25-4a1.375 1.375 0 1 1 0 2.75 1.375 1.375 0 0 1 0-2.75Zm3.75 0a1.375 1.375 0 1 1 0 2.75 1.375 1.375 0 0 1 0-2.75Zm3.25 0a1.375 1.375 0 1 1 0 2.75 1.375 1.375 0 0 1 0-2.75Zm-13.75.25a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Zm3.5 0a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75ZM.875 0a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Zm3.5 0a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Zm3.5 0a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Zm3.5 0a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Zm3.5 0a.875.875 0 1 1 0 1.75.875.875 0 0 1 0-1.75Z",
+      "alert":            "M6.491 1.856C7.17.716 8.821.714 9.5 1.855l6.249 10.504c.694 1.166-.147 2.644-1.504 2.644H1.752c-1.357 0-2.197-1.478-1.504-2.644L6.491 1.856Zm1.503 9.138a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm0-7a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Z",
+      "shield":           "M7.876.01a.75.75 0 0 1 .331.024l5.265 1.61a.75.75 0 0 1 .53.718V8c0 2.71-1.479 4.709-2.875 5.99a12.623 12.623 0 0 1-1.925 1.447c-.523.32-.702.404-.901.495a.751.751 0 0 1-.627 0c-.199-.092-.377-.175-.898-.496A12.567 12.567 0 0 1 4.86 13.99c-1.346-1.242-2.77-3.157-2.857-5.738l.006-6.012a.75.75 0 0 1 .52-.595L7.875.009ZM3.538 8.663c.208 1.803 1.24 3.21 2.338 4.223.481.444.965.8 1.374 1.07V9.371l-3.712-.707Zm5.212.708v4.574c.407-.27.886-.623 1.362-1.06 1.103-1.013 2.138-2.419 2.348-4.219l-3.71.705ZM3.498 2.915V7.13l3.752.715V1.761L3.498 2.916ZM8.75 7.843l3.752-.71V2.914L8.75 1.767v6.076Z",
+      "end-user-experience-monitoring": "M12.608 12.438a.5.5 0 0 1 .83.554l-.972 1.755c.216.649-.317 1.253-.966 1.253a1 1 0 0 1-.144-1.99l1.252-1.572ZM11.5 9.5c2.432 0 4.5 1.858 4.5 4.25a.75.75 0 0 1-1.5 0c0-1.468-1.297-2.75-3-2.75s-3 1.282-3 2.75a.75.75 0 0 1-1.5 0c0-2.392 2.068-4.25 4.5-4.25ZM6 0a4 4 0 0 1 2.615 7.024c.373.167.734.372 1.073.617a.75.75 0 0 1-.876 1.217C7.852 8.163 7.13 8 5.798 8 3.418 8 1.5 9.911 1.5 12.25v.25h2.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75v-1c0-2.323 1.39-4.319 3.383-5.227A4 4 0 0 1 6 0Zm0 1.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z",
+      "information":      "M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 7a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0V8a1 1 0 0 0-1-1Zm0-4a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"
+    };
+  </script>
+
+  <style>
+    /* SAP 72 — fuente oficial Fiori/SAPUI5 */
+    @font-face {
+      font-family: '72';
+      src: url('https://sapui5.hana.ondemand.com/resources/sap/ui/core/themes/sap_horizon/fonts/72-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal;
+    }
+    @font-face {
+      font-family: '72';
+      src: url('https://sapui5.hana.ondemand.com/resources/sap/ui/core/themes/sap_horizon/fonts/72-Italic.woff2') format('woff2');
+      font-weight: 400; font-style: italic;
+    }
+    @font-face {
+      font-family: '72';
+      src: url('https://sapui5.hana.ondemand.com/resources/sap/ui/core/themes/sap_horizon/fonts/72-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal;
+    }
+
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --navy:        #050A16;
+      --blue:        #0070F2;
+      --blue-hover:  #0058C4;
+      --blue-light:  #EBF3FE;
+      --surface:     #F8FAFC;
+      --surface-2:   #F1F5F9;
+      --slate:       #556b82;
+      --slate-light: #62748B;
+      --border:      #e2e8f0;
+      --text-primary:   #0f172a;   /* var(--text/primary) Figma */
+      --text-secondary: #62748b;   /* var(--text/secondary) Figma */
+      --text-muted:     #94a3b8;
+
+      /* Semantic */
+      --success:     #256f3a;
+      --success-bg:  #e8f5ee;
+      --error:       #aa0808;
+      --error-bg:    #fce8e8;
+      --warning:     #D97706;
+      --warning-bg:  #FEF3C7;
+      --required:    #E11D48;   /* asterisco de campo obligatorio */
+
+      /* SAP Fiori Input — Horizon theme */
+      --sap-field-shadow:      inset 0 0 0 1px rgba(85,107,129,0.25);
+      --sap-field-shadow-hover: inset 0 0 0 1px rgba(85,107,129,0.5);
+      --sap-field-shadow-focus: inset 0 0 0 2px #0070F2;
+      --sap-input-height:  36px;
+      --sap-label-color:   #62748b;  /* var(--text/secondary) */
+      --sap-label-size:    14px;
+      --sap-placeholder:   #556b82;  /* var(--sapField_PlaceholderTextColor) */
+      --sap-font:          '72', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --header-h: 56px;
+      --sidebar-w: 230px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+           background: var(--surface); color: var(--text-primary); line-height: 1.5; }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .app-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--header-h);
+      background: var(--navy);
+      display: flex; align-items: center; gap: 24px;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .header-logo { display: flex; align-items: center; gap: 0; flex-shrink: 0; }
+
+    .header-divider {
+      width: 1px; height: 24px;
+      background: rgba(255,255,255,0.15);
+      margin: 0 16px;
+    }
+
+    .header-title {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      white-space: nowrap;
+    }
+
+    /* Global search */
+    .global-search {
+      flex: 1; max-width: 360px;
+      position: relative;
+    }
+
+    .global-search input {
+      width: 100%; height: 34px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 0 12px 0 36px;
+      font-size: 13px; color: white;
+      outline: none;
+      transition: background 0.15s, border-color 0.15s;
+      font-family: inherit;
+    }
+
+    .global-search input::placeholder { color: rgba(255,255,255,0.35); }
+    .global-search input:focus {
+      background: rgba(255,255,255,0.11);
+      border-color: rgba(0,112,242,0.6);
+    }
+
+    .global-search .search-icon {
+      position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+      color: rgba(255,255,255,0.35); pointer-events: none;
+    }
+
+    .global-search .search-icon svg { display: block; }
+
+    .header-version {
+      margin-left: auto;
+      font-size: 11px; color: rgba(255,255,255,0.3);
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+
+    /* ============================================================
+       LAYOUT
+    ============================================================ */
+    .app-body {
+      display: flex;
+      margin-top: var(--header-h);
+      min-height: calc(100vh - var(--header-h));
+    }
+
+    /* ============================================================
+       SIDEBAR
+    ============================================================ */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: white;
+      border-right: 1px solid var(--border);
+      position: fixed;
+      top: var(--header-h); bottom: 0;
+      left: 0;
+      overflow-y: auto;
+      padding: 20px 0 40px;
+    }
+
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-track { background: transparent; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .nav-section { margin-bottom: 8px; }
+
+    .nav-section-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.09em; text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 8px 20px 6px;
+    }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 7px 20px;
+      font-size: 13px; color: var(--text-secondary);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.12s, color 0.12s;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-item:hover { background: var(--surface); color: var(--text-primary); }
+
+    .nav-item.active {
+      background: var(--blue-light);
+      color: var(--blue);
+      border-left-color: var(--blue);
+      font-weight: 600;
+    }
+
+    .nav-item .nav-icon { width: 16px; height: 16px; flex-shrink: 0; }
+    .nav-item .nav-icon svg { display: block; }
+
+    .nav-badge {
+      margin-left: auto;
+      font-size: 9px; font-weight: 700;
+      padding: 2px 6px; border-radius: 10px;
+      background: var(--surface-2); color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+
+    .nav-badge.new {
+      background: var(--blue-light); color: var(--blue);
+    }
+
+    .nav-separator {
+      height: 1px; background: var(--border);
+      margin: 10px 20px;
+    }
+
+    /* ============================================================
+       MAIN CONTENT
+    ============================================================ */
+    .content {
+      flex: 1;
+      margin-left: var(--sidebar-w);
+      padding: 40px 48px 80px;
+      min-width: 0;
+    }
+
+    /* ============================================================
+       COMPONENT SECTION
+    ============================================================ */
+    .component-section {
+      margin-bottom: 72px;
+      scroll-margin-top: 76px;
+    }
+
+    .component-section.hidden { display: none; }
+
+    .component-header { margin-bottom: 28px; }
+
+    .component-meta {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .component-name {
+      font-size: 22px; font-weight: 700; color: var(--text-primary);
+      letter-spacing: -0.3px;
+    }
+
+    .component-badge {
+      font-size: 10px; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+      background: var(--success-bg); color: var(--success);
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+
+    .component-badge.wip {
+      background: var(--warning-bg); color: var(--warning);
+    }
+
+    .component-badge.foundation {
+      background: var(--blue-light); color: var(--blue);
+    }
+
+    .accent-bar {
+      width: 36px; height: 3px;
+      background: var(--blue); border-radius: 2px;
+      margin: 10px 0 12px;
+    }
+
+    .component-desc {
+      font-size: 14px; color: var(--text-secondary);
+      max-width: 680px; line-height: 1.7;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex; gap: 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      padding: 8px 18px;
+      font-size: 13px; font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .tab:hover { color: var(--text-primary); }
+
+    .tab.active {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ============================================================
+       DEMO CANVAS
+    ============================================================ */
+    .demo-canvas {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .demo-canvas-toolbar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .demo-toolbar-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+
+    .demo-canvas-label {
+      margin-left: 8px;
+      font-size: 11px; color: var(--text-muted);
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+
+    .demo-canvas-body { padding: 0; }
+
+    /* ============================================================
+       FOUNDATION: COLORES
+    ============================================================ */
+    .token-group { margin-bottom: 32px; }
+
+    .token-group-title {
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--slate-light);
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .token-group-title::after {
+      content: ""; flex: 1; height: 1px; background: var(--border);
+    }
+
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .swatch-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: box-shadow 0.18s, transform 0.15s, border-color 0.18s;
+      cursor: pointer;
+    }
+
+    .swatch-card:hover {
+      box-shadow: 0 6px 22px rgba(0,112,242,0.08);
+      border-color: #b3d4fc;
+      transform: translateY(-1px);
+    }
+
+    .swatch-color {
+      height: 76px;
+      display: flex; align-items: flex-end; justify-content: flex-end;
+      padding: 8px;
+    }
+
+    .swatch-color .copy-pill {
+      font-size: 9px; font-weight: 700;
+      background: rgba(255,255,255,0.85);
+      color: var(--navy);
+      padding: 2px 8px; border-radius: 12px;
+      opacity: 0; transition: opacity 0.15s;
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+
+    .swatch-color.is-light .copy-pill { background: rgba(5,10,22,0.7); color: white; }
+    .swatch-card:hover .copy-pill { opacity: 1; }
+    .swatch-color .copy-pill.copied { background: var(--success); color: white; opacity: 1; }
+
+    .swatch-info { padding: 11px 14px 13px; }
+
+    .swatch-name {
+      font-size: 13px; font-weight: 700; color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .swatch-var {
+      font-family: 'SFMono-Regular', 'SF Mono', 'Fira Code', monospace;
+      font-size: 11px; color: var(--blue); font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .swatch-hex {
+      font-family: 'SFMono-Regular', 'SF Mono', 'Fira Code', monospace;
+      font-size: 11px; color: var(--text-muted);
+    }
+
+    .swatch-note {
+      display: inline-block;
+      margin-top: 7px;
+      font-size: 10px; font-weight: 700;
+      background: var(--success-bg); color: var(--success);
+      padding: 2px 8px; border-radius: 10px;
+    }
+
+    /* ============================================================
+       FOUNDATION: ICONOGRAFÍA
+    ============================================================ */
+    .icon-toolbar {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .icon-search-input {
+      padding: 9px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      width: 280px;
+      background: white;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+
+    .icon-search-input:focus { border-color: var(--blue); }
+    .icon-search-input::placeholder { color: var(--text-muted); }
+
+    .icon-count-badge {
+      font-size: 12px; color: var(--slate);
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 12px;
+    }
+
+    .icon-category { margin-bottom: 36px; }
+    .icon-category.hidden { display: none; }
+
+    .icon-category-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--slate-light);
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+
+    .icon-category-label::after {
+      content: ""; flex: 1; height: 1px; background: var(--border);
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 16px;
+    }
+
+    .icon-card {
+      background: white;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+      position: relative;
+    }
+
+    .icon-card:hover {
+      box-shadow: 0 6px 24px rgba(0, 112, 242, 0.09);
+      border-color: #b3d4fc;
+      transform: translateY(-1px);
+    }
+
+    .icon-card.hidden { display: none; }
+
+    .icon-card.variant-success { border-left: 4px solid var(--success); }
+    .icon-card.variant-error   { border-left: 4px solid var(--error); }
+    .icon-card.variant-warning { border-left: 4px solid var(--warning); }
+
+    .icon-card-top {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .icon-preview {
+      width: 54px; height: 54px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      background: var(--blue-light);
+    }
+
+    .icon-preview.success { background: var(--success-bg); }
+    .icon-preview.error   { background: var(--error-bg); }
+    .icon-preview.warning { background: var(--warning-bg); }
+
+    .icon-preview svg { width: 26px; height: 26px; fill: var(--blue); }
+    .icon-preview.success svg { fill: var(--success); }
+    .icon-preview.error   svg { fill: var(--error); }
+    .icon-preview.warning svg { fill: var(--warning); }
+
+    .icon-info .icon-action-name {
+      font-size: 14px; font-weight: 700; color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .icon-info .icon-action-desc {
+      font-size: 12px; color: var(--slate); line-height: 1.4;
+    }
+
+    .uri-row {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface-2);
+      border-radius: 8px;
+      padding: 9px 12px;
+      cursor: pointer;
+      transition: background 0.15s;
+      gap: 10px;
+    }
+
+    .uri-row:hover { background: #ddeafb; }
+
+    .uri-code {
+      font-family: 'SFMono-Regular', 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px; font-weight: 600; color: var(--blue);
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      font-family: inherit;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 3px 10px;
+      font-size: 10px; font-weight: 700;
+      color: var(--slate);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+
+    .copy-btn:hover { background: var(--blue); color: white; border-color: var(--blue); }
+    .copy-btn.copied { background: var(--success); color: white; border-color: var(--success); }
+
+    .icon-empty {
+      display: none;
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* ============================================================
+       SAP FIORI FILTER BAR — estilos exactos Figma (nodo 78:29)
+    ============================================================ */
+    .sap-filter-bar {
+      display: flex;
+      align-items: center;
+      min-height: 108px;
+      padding: 0 48px;
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .sap-filter-fields {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      flex: 1;
+      flex-wrap: wrap;
+    }
+
+    .sap-filter-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sap-filter-label {
+      font-family: var(--sap-font);
+      font-size: 14px;
+      line-height: 16px;
+      color: #62748b;
+      letter-spacing: 0.2px;
+      font-weight: 400;
+    }
+
+    .sap-filter-input {
+      font-family: var(--sap-font);
+      height: var(--sap-input-height);
+      width: 296px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-style: normal;
+      color: var(--text-primary);
+      background: white;
+      outline: none;
+      box-shadow: var(--sap-field-shadow);
+      transition: box-shadow 0.15s;
+    }
+
+    .sap-filter-input::placeholder {
+      color: #556b82;
+      font-style: italic;
+    }
+
+    .sap-filter-input:hover { box-shadow: var(--sap-field-shadow-hover); }
+    .sap-filter-input:focus { box-shadow: var(--sap-field-shadow-focus); font-style: normal; }
+
+    .sap-filter-select-wrap { position: relative; }
+
+    .sap-filter-select {
+      font-family: var(--sap-font);
+      height: var(--sap-input-height);
+      width: 296px;
+      padding: 5px 36px 5px 10px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-style: italic;
+      color: #556b82;
+      background: white;
+      outline: none;
+      appearance: none;
+      cursor: pointer;
+      box-shadow: var(--sap-field-shadow);
+      transition: box-shadow 0.15s;
+    }
+
+    .sap-filter-select.has-value { font-style: normal; color: var(--text-primary); }
+    .sap-filter-select:hover { box-shadow: var(--sap-field-shadow-hover); }
+    .sap-filter-select:focus { box-shadow: var(--sap-field-shadow-focus); }
+
+    .sap-select-chevron {
+      position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+      pointer-events: none; color: #556b82;
+      display: flex; align-items: center;
+    }
+
+    .sap-filter-clear {
+      font-family: var(--sap-font);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 20px;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 20px;
+      cursor: default;
+      color: rgba(0, 112, 242, 0.4);
+      white-space: nowrap;
+      align-self: flex-end;
+      transition: color 0.15s, background 0.15s;
+      pointer-events: none;
+    }
+
+    .sap-filter-clear.is-active { color: #0070F2; cursor: pointer; pointer-events: auto; }
+    .sap-filter-clear.is-active:hover { color: #0058C4; background: rgba(0,112,242,0.06); }
+
+    /* ============================================================
+       DEMO TABLE
+    ============================================================ */
+    .demo-table-wrap { padding: 0 24px 20px; }
+
+    .demo-table-status {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 0 10px;
+      font-size: 12px; color: var(--text-muted);
+    }
+
+    .demo-table-status .filter-applied-toast {
+      display: none;
+      align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 600;
+      color: var(--blue);
+      background: var(--blue-light);
+      padding: 3px 10px; border-radius: 20px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .demo-table-status .filter-applied-toast.show { display: flex; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(2px); } to { opacity: 1; transform: none; } }
+
+    .demo-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+    .demo-table thead th {
+      padding: 8px 12px;
+      text-align: left;
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--border);
+      background: var(--surface);
+    }
+
+    .demo-table tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+    .demo-table tbody tr:hover { background: var(--surface); }
+    .demo-table tbody tr.hidden { display: none; }
+    .demo-table tbody td { padding: 10px 12px; color: var(--text-primary); }
+
+    .demo-table .td-pais { display: inline-flex; align-items: center; gap: 6px; }
+    .flag { font-size: 15px; line-height: 1; }
+
+    .estado-badge {
+      display: inline-block;
+      font-size: 11px; font-weight: 600;
+      padding: 2px 8px; border-radius: 10px;
+    }
+
+    .estado-activo    { background: var(--success-bg); color: var(--success); }
+    .estado-revision  { background: var(--warning-bg); color: var(--warning); }
+    .estado-pendiente { background: var(--surface-2); color: var(--slate); }
+
+    .empty-state {
+      text-align: center;
+      padding: 32px 0;
+      color: var(--text-muted);
+      font-size: 13px;
+      display: none;
+    }
+
+    .empty-state svg { margin: 0 auto 10px; display: block; opacity: 0.35; }
+
+    /* ============================================================
+       PDP TABLE — patrón estándar de tablas / listados
+    ============================================================ */
+    .pdp-table-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .pdp-table-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pdp-table-titles .pdp-table-title {
+      font-size: 15px; font-weight: 700; color: var(--text-primary);
+      letter-spacing: -0.1px;
+    }
+
+    .pdp-table-titles .pdp-table-subtitle {
+      font-size: 12px; color: var(--slate); margin-top: 2px;
+    }
+
+    .pdp-btn-primary {
+      font-family: inherit;
+      display: inline-flex; align-items: center; gap: 7px;
+      background: var(--blue); color: white;
+      border: none; border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .pdp-btn-primary:hover { background: var(--blue-hover); }
+    .pdp-btn-primary svg { width: 13px; height: 13px; fill: currentColor; display: block; }
+
+    .pdp-table-scroll { overflow-x: auto; }
+
+    .pdp-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+    .pdp-table thead th {
+      text-align: left;
+      padding: 11px 16px;
+      font-size: 12px; font-weight: 700;
+      color: var(--text-primary);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      background: white;
+    }
+
+    .pdp-table tbody td {
+      padding: 11px 16px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .pdp-table tbody tr:last-child td { border-bottom: none; }
+
+    /* Zebra striping */
+    .pdp-table tbody tr:nth-child(even) { background: var(--surface); }
+
+    /* Hover */
+    .pdp-table tbody tr:hover { background: var(--blue-light); }
+
+    .pdp-cell-strong { color: var(--text-primary); font-weight: 600; }
+
+    .pdp-table .col-center { text-align: center; }
+    .pdp-table .col-actions { text-align: right; white-space: nowrap; }
+
+    .pdp-empty { color: var(--text-muted); }
+
+    .pdp-desc {
+      display: block;
+      max-width: 360px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    .pdp-actions { display: inline-flex; align-items: center; gap: 4px; }
+
+    .pdp-action-btn {
+      width: 28px; height: 28px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: none; background: none;
+      border-radius: 6px; cursor: pointer;
+      color: var(--blue);
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .pdp-action-btn:hover { background: var(--blue-light); }
+    .pdp-action-btn.danger:hover { background: var(--error-bg); color: var(--error); }
+    .pdp-action-btn svg { width: 16px; height: 16px; fill: currentColor; display: block; }
+
+    /* Toast genérico de acciones */
+    .pdp-toast {
+      position: fixed; left: 50%; bottom: 28px;
+      transform: translateX(-50%) translateY(10px);
+      background: var(--navy); color: white;
+      font-size: 13px; font-weight: 500;
+      padding: 10px 18px; border-radius: 8px;
+      box-shadow: 0 8px 28px rgba(5,10,22,0.28);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 200;
+    }
+
+    .pdp-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ============================================================
+       PDP FORM — patrón estándar de formularios
+    ============================================================ */
+    .pdp-form-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .pdp-form-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 16px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .pdp-form-titles .pdp-form-title {
+      font-size: 15px; font-weight: 700; color: var(--text-primary);
+      letter-spacing: -0.1px;
+    }
+
+    .pdp-form-titles .pdp-form-subtitle {
+      font-size: 12px; color: var(--slate); margin-top: 2px;
+    }
+
+    /* Acciones en cabecera (vista completa): secundario → principal, a la derecha */
+    .pdp-form-actions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+
+    .pdp-btn-secondary {
+      font-family: inherit;
+      background: white; color: var(--blue);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .pdp-btn-secondary:hover { background: var(--surface); border-color: #b3d4fc; color: var(--blue-hover); }
+
+    .pdp-form-body { padding: 24px; }
+
+    .pdp-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px 24px;
+    }
+
+    .pdp-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .pdp-field.col-span-2 { grid-column: 1 / -1; }
+
+    .pdp-label {
+      display: flex; align-items: center; gap: 5px;
+      font-family: var(--sap-font);
+      font-size: 14px; color: var(--slate);
+      letter-spacing: 0.2px; line-height: 16px;
+    }
+
+    .pdp-required { color: var(--required); font-weight: 700; }
+
+    /* Controles — comparten el estilo de campo SAP Horizon (box-shadow inset) */
+    .pdp-input, .pdp-textarea, .pdp-select {
+      font-family: var(--sap-font);
+      width: 100%;
+      font-size: 14px; color: var(--text-primary);
+      background: white;
+      border: none; border-radius: 4px;
+      outline: none;
+      box-shadow: var(--sap-field-shadow);
+      transition: box-shadow 0.15s;
+    }
+
+    .pdp-input, .pdp-select { height: var(--sap-input-height); padding: 5px 10px; }
+    .pdp-textarea { padding: 8px 10px; min-height: 96px; resize: vertical; line-height: 1.5; }
+
+    .pdp-input::placeholder, .pdp-textarea::placeholder { color: var(--sap-placeholder); font-style: italic; }
+
+    .pdp-input:hover, .pdp-textarea:hover, .pdp-select:hover { box-shadow: var(--sap-field-shadow-hover); }
+    .pdp-input:focus, .pdp-textarea:focus, .pdp-select:focus { box-shadow: var(--sap-field-shadow-focus); }
+    .pdp-input:focus::placeholder, .pdp-textarea:focus::placeholder { font-style: normal; }
+
+    /* Select */
+    .pdp-select-wrap { position: relative; }
+    .pdp-select { padding-right: 36px; appearance: none; cursor: pointer; font-style: italic; color: var(--sap-placeholder); }
+    .pdp-select.has-value { font-style: normal; color: var(--text-primary); }
+
+    /* Input con adorno a la derecha (password) */
+    .pdp-input-wrap { position: relative; }
+    .pdp-input-wrap .pdp-input { padding-right: 38px; }
+    .pdp-pass-toggle {
+      position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+      width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      border: none; background: none; cursor: pointer;
+      color: var(--slate); border-radius: 5px;
+    }
+    .pdp-pass-toggle:hover { background: var(--surface-2); color: var(--text-primary); }
+    .pdp-pass-toggle svg { width: 16px; height: 16px; fill: currentColor; display: block; }
+
+    /* Estado de error / validación */
+    .pdp-field.has-error .pdp-input,
+    .pdp-field.has-error .pdp-textarea,
+    .pdp-field.has-error .pdp-select { box-shadow: inset 0 0 0 1px var(--error); }
+    .pdp-field-error { font-size: 11px; color: var(--error); display: none; }
+    .pdp-field.has-error .pdp-field-error { display: block; }
+
+    /* Tooltip de ayuda */
+    .pdp-info { position: relative; display: inline-flex; align-items: center; }
+    .pdp-info-icon {
+      width: 14px; height: 14px; color: var(--text-muted); cursor: help; display: block;
+    }
+    .pdp-info-icon svg { width: 14px; height: 14px; fill: currentColor; display: block; }
+    .pdp-tooltip {
+      position: absolute; left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%);
+      background: var(--navy); color: white;
+      font-size: 11px; font-weight: 400; line-height: 1.4; letter-spacing: 0;
+      padding: 8px 11px; border-radius: 6px;
+      width: max-content; max-width: 240px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.15s, transform 0.15s;
+      z-index: 50;
+      box-shadow: 0 6px 20px rgba(5,10,22,0.25);
+    }
+    .pdp-tooltip::after {
+      content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      border: 5px solid transparent; border-top-color: var(--navy);
+    }
+    .pdp-info:hover .pdp-tooltip, .pdp-info:focus-within .pdp-tooltip { opacity: 1; }
+
+    /* Adjunto */
+    .pdp-attach { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .pdp-attach input[type="file"] { display: none; }
+    .pdp-attach-btn {
+      font-family: inherit;
+      display: inline-flex; align-items: center; gap: 7px;
+      background: white; color: var(--blue);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 7px 14px; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: background 0.15s, border-color 0.15s;
+    }
+    .pdp-attach-btn:hover { background: var(--surface); border-color: #b3d4fc; }
+    .pdp-attach-btn svg { width: 14px; height: 14px; fill: currentColor; display: block; }
+    .pdp-attach-name { font-size: 12px; color: var(--slate); }
+    .pdp-attach-name.empty { color: var(--text-muted); font-style: italic; }
+
+    /* Checkbox / Switch */
+    .pdp-check { display: inline-flex; align-items: center; gap: 9px; cursor: pointer; font-size: 13px; color: var(--text-primary); }
+    .pdp-check input { position: absolute; opacity: 0; width: 0; height: 0; }
+    .pdp-switch-track {
+      width: 38px; height: 22px; border-radius: 12px;
+      background: #cbd5e1; position: relative; flex-shrink: 0;
+      transition: background 0.18s;
+    }
+    .pdp-switch-track::after {
+      content: ""; position: absolute; top: 2px; left: 2px;
+      width: 18px; height: 18px; border-radius: 50%; background: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+      transition: transform 0.18s;
+    }
+    .pdp-check input:checked + .pdp-switch-track { background: var(--blue); }
+    .pdp-check input:checked + .pdp-switch-track::after { transform: translateX(16px); }
+    .pdp-check input:focus-visible + .pdp-switch-track { box-shadow: 0 0 0 3px var(--blue-light); }
+
+    /* Switch segmentado (variante PDP — selección excluyente, p. ej. No / Sí) */
+    .pdp-segmented {
+      display: inline-flex;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 5px;
+      gap: 4px;
+      width: max-content;
+    }
+
+    .pdp-seg-btn {
+      font-family: var(--sap-font);
+      font-size: 14px; font-weight: 700;
+      color: var(--blue);
+      background: none;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 8px 26px;
+      min-width: 72px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .pdp-seg-btn:hover { background: var(--surface); }
+
+    .pdp-seg-btn.selected {
+      background: var(--blue-light);
+      border-color: var(--blue);
+    }
+
+    /* ============================================================
+       PDP MODAL — formulario en fragment / diálogo
+    ============================================================ */
+    .pdp-modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(5,10,22,0.45);
+      display: none; align-items: flex-start; justify-content: center;
+      padding: 60px 20px; z-index: 300; overflow-y: auto;
+    }
+    .pdp-modal-overlay.open { display: flex; }
+
+    .pdp-modal {
+      background: white; width: 100%; max-width: 680px;
+      border-radius: 14px; overflow: hidden;
+      box-shadow: 0 24px 60px rgba(5,10,22,0.35);
+      animation: modalIn 0.2s ease;
+    }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+    .pdp-modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 24px; border-bottom: 1px solid var(--border);
+    }
+    .pdp-modal-title { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+    .pdp-modal-close {
+      width: 30px; height: 30px; border: none; background: none; cursor: pointer;
+      border-radius: 6px; color: var(--slate);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pdp-modal-close:hover { background: var(--surface-2); color: var(--text-primary); }
+    .pdp-modal-close svg { width: 14px; height: 14px; fill: currentColor; display: block; }
+
+    .pdp-modal-body { padding: 22px 24px; max-height: 56vh; overflow-y: auto; }
+    .pdp-modal-body .pdp-field + .pdp-field { margin-top: 18px; }
+
+    /* Acciones en footer (modal): secundario → principal, a la derecha */
+    .pdp-modal-footer {
+      display: flex; justify-content: flex-end; gap: 10px;
+      padding: 14px 24px; border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    @media (max-width: 720px) {
+      .pdp-form-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================
+       BEHAVIOR NOTES
+    ============================================================ */
+    .behavior-list { display: flex; flex-direction: column; gap: 12px; margin-top: 4px; }
+
+    .behavior-item {
+      display: flex; gap: 14px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+
+    .behavior-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .behavior-icon.blue { background: var(--blue-light); }
+    .behavior-icon.green { background: var(--success-bg); }
+    .behavior-icon.slate { background: var(--surface-2); }
+    .behavior-icon.warning { background: var(--warning-bg); }
+    .behavior-icon svg { display: block; }
+
+    .behavior-text strong {
+      display: block; font-size: 13px; font-weight: 600;
+      color: var(--text-primary); margin-bottom: 3px;
+    }
+
+    .behavior-text p { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+
+    /* ============================================================
+       SAP USAGE CODE
+    ============================================================ */
+    .code-block {
+      background: var(--navy);
+      border-radius: 8px;
+      padding: 16px 20px;
+      overflow-x: auto;
+      margin-bottom: 12px;
+    }
+
+    .code-block pre {
+      font-family: 'SFMono-Regular', 'SF Mono', 'Fira Code', monospace;
+      font-size: 12px; line-height: 1.8;
+      white-space: pre;
+    }
+
+    .code-block .t  { color: #c4b5fd; }
+    .code-block .a  { color: #86efac; }
+    .code-block .v  { color: #fcd34d; }
+    .code-block .s  { color: rgba(255,255,255,0.4); }
+    .code-block .c  { color: #64748b; font-style: italic; }
+    .code-block .tx { color: #7dd3fc; }
+
+    .code-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 6px;
+    }
+
+    /* usage block (iconos) */
+    .usage-label {
+      font-size: 9px; font-weight: 800;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--slate-light);
+      margin: 13px 0 6px;
+    }
+
+    .usage-block {
+      background: var(--navy);
+      border-radius: 8px;
+      padding: 12px 14px;
+      overflow: hidden;
+    }
+
+    .usage-block pre {
+      font-family: 'SFMono-Regular', 'SF Mono', 'Fira Code', monospace;
+      font-size: 11px; line-height: 1.7;
+      white-space: pre-wrap; word-break: break-all;
+    }
+
+    .usage-block .t  { color: #c4b5fd; }
+    .usage-block .a  { color: #86efac; }
+    .usage-block .v  { color: #fcd34d; }
+    .usage-block .s  { color: rgba(255,255,255,0.4); }
+    .usage-block .tx { color: #7dd3fc; }
+
+    /* Property table */
+    .prop-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
+    .prop-table thead th {
+      padding: 7px 12px;
+      text-align: left;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 2px solid var(--border);
+      background: var(--surface);
+    }
+    .prop-table tbody td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      vertical-align: top;
+    }
+    .prop-table tbody td:first-child {
+      font-family: 'SFMono-Regular', 'SF Mono', 'Fira Code', monospace;
+      font-size: 11.5px; color: var(--blue); font-weight: 600;
+    }
+    .prop-table tbody td:nth-child(2) { color: var(--text-muted); }
+    .prop-table tbody tr:hover td { background: var(--surface); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .content { margin-left: 0; padding: 24px 20px 60px; }
+      .app-footer { margin-left: 0; }
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .app-footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.3);
+      text-align: center;
+      padding: 18px;
+      font-size: 11px;
+      margin-left: var(--sidebar-w);
+    }
+
+    .app-footer span { color: var(--blue); }
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+============================================================ -->
+<header class="app-header">
+  <div class="header-logo">
+    <svg width="108" height="56" viewBox="0 0 155 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M76.1383 24.2088V27.0443C76.972 26.0557 77.9465 25.2789 79.0616 24.7139C80.3284 24.0621 81.6384 23.7362 82.9918 23.7362C85.8068 23.7362 88.048 24.6813 89.7154 26.5717C91.2203 28.2774 91.9728 30.5534 91.9728 33.3999C91.9728 35.9312 91.3881 38.0171 90.2188 39.6576C88.5839 41.95 86.202 43.0962 83.073 43.0962C81.3191 43.0962 79.76 42.6399 78.3958 41.7273C77.5621 41.1515 76.8638 40.4181 76.3008 39.5273V47.0399H73.28V24.2088H76.1383ZM76.3008 36.3169C77.9031 39.1416 79.9982 40.5539 82.5858 40.5539C84.7729 40.5539 86.424 39.7228 87.5391 38.0606C88.362 36.8438 88.7734 35.2739 88.7734 33.351C88.7734 31.3194 88.3024 29.6897 87.3605 28.4621C86.2345 27.0063 84.605 26.2784 82.4721 26.2784C81.3028 26.2784 80.1876 26.5934 79.1266 27.2236C77.9573 27.9189 77.0153 28.9401 76.3008 30.2873V36.3169Z" fill="white"/>
+      <path d="M111.088 15.3599H114.109V43.9925H111.218V41.1243C110.731 41.8522 110.168 42.4497 109.529 42.9169C108.11 43.9273 106.454 44.4325 104.559 44.4325C102.567 44.4325 100.808 43.8729 99.281 42.7539C96.7042 40.8744 95.4158 37.9791 95.4158 34.068C95.4158 31.8083 95.8976 29.8418 96.8612 28.1688C97.9222 26.3436 99.4055 25.0616 101.311 24.3228C102.34 23.9317 103.395 23.7362 104.478 23.7362C106.319 23.7362 107.953 24.2902 109.383 25.3984C110.054 25.9199 110.622 26.5554 111.088 27.305V15.3599ZM111.088 30.6458C109.442 27.7342 107.428 26.2784 105.046 26.2784C103.574 26.2784 102.269 26.7727 101.132 27.7613C99.4542 29.2063 98.6151 31.3302 98.6151 34.1332C98.6151 36.0453 99.0157 37.6532 99.8169 38.9569C101.008 40.9125 102.756 41.8902 105.063 41.8902C106.535 41.8902 107.883 41.3796 109.106 40.3584C109.864 39.7174 110.525 38.8591 111.088 37.7836V30.6458Z" fill="white"/>
+      <path d="M123.366 24.2088V27.0443C124.199 26.0557 125.174 25.2789 126.289 24.7139C127.556 24.0621 128.866 23.7362 130.219 23.7362C133.034 23.7362 135.275 24.6813 136.943 26.5717C138.448 28.2774 139.2 30.5534 139.2 33.3999C139.2 35.9312 138.615 38.0171 137.446 39.6576C135.811 41.95 133.429 43.0962 130.3 43.0962C128.546 43.0962 126.987 42.6399 125.623 41.7273C124.789 41.1515 124.091 40.4181 123.528 39.5273V47.0399H120.507V24.2088H123.366ZM123.528 36.3169C125.13 39.1416 127.225 40.5539 129.813 40.5539C132 40.5539 133.651 39.7228 134.766 38.0606C135.589 36.8438 136.001 35.2739 136.001 33.351C136.001 31.3194 135.53 29.6897 134.588 28.4621C133.462 27.0063 131.832 26.2784 129.699 26.2784C128.53 26.2784 127.415 26.5934 126.354 27.2236C125.185 27.9189 124.243 28.9401 123.528 30.2873V36.3169Z" fill="white"/>
+      <path d="M74.3899 59.0516C75.5142 59.902 76.7755 60.3273 78.1737 60.3273C79.4438 60.3273 80.0788 59.9434 80.0788 59.1756C80.0788 58.5909 79.3564 58.0535 77.9116 57.5633L77.0027 57.2621C75.9308 56.896 75.1938 56.5623 74.7918 56.2611C74.1393 55.765 73.8131 55.0593 73.8131 54.1439C73.8131 53.128 74.2529 52.316 75.1326 51.7077C75.8318 51.2234 76.7115 50.9813 77.7718 50.9813C79.3797 50.9813 80.8245 51.3858 82.1062 52.1949L80.9964 54.011C80.0526 53.2846 79.0301 52.9213 77.9291 52.9213C77.4746 52.9213 77.1018 53.004 76.8105 53.1694C76.4493 53.3702 76.2687 53.6625 76.2687 54.0464C76.2687 54.3417 76.426 54.5957 76.7406 54.8083C76.9911 54.9854 77.4484 55.1744 78.1126 55.3752L79.0826 55.6587C81.4187 56.3615 82.5868 57.5013 82.5868 59.0782C82.5868 59.8696 82.3014 60.5753 81.7304 61.1954C81.008 61.9809 79.7555 62.3736 77.9727 62.3736C76.2366 62.3736 74.6724 61.8598 73.28 60.8322L74.3899 59.0516Z" fill="#0070F2"/>
+      <path d="M84.8764 51.3268H87.2533V57.7139C87.2533 59.4325 87.9146 60.2918 89.237 60.2918C89.9478 60.2918 90.5944 59.9788 91.177 59.3528C91.6023 58.8981 91.9315 58.3222 92.1645 57.6253V51.3268H94.5415V62.0281H92.3218V60.1235C91.3547 61.5291 90.0993 62.2319 88.5554 62.2319C87.2795 62.2319 86.3095 61.786 85.6454 60.8942C85.1327 60.2032 84.8764 59.2524 84.8764 58.0417V51.3268Z" fill="#0070F2"/>
+      <path d="M97.7748 46.7202H100.353V49.1475H97.7748V46.7202ZM97.8797 51.3268H100.239V62.0281H97.8797V51.3268Z" fill="#0070F2"/>
+      <path d="M106.741 47.987V51.3268H110.035V53.0099H106.741V58.8301C106.741 59.403 106.808 59.7987 106.942 60.0172C107.122 60.3184 107.422 60.469 107.842 60.469C108.36 60.469 108.893 60.2623 109.441 59.8489L110 61.4966C109.15 62.0459 108.253 62.3205 107.309 62.3205C106.33 62.3205 105.59 62.0252 105.089 61.4346C104.676 60.9444 104.469 60.2357 104.469 59.3085V53.0099H102.109V51.3268H104.469V49.0412L106.741 47.987Z" fill="#0070F2"/>
+      <path d="M121.876 57.1381H114.003C114.043 58.0771 114.335 58.839 114.877 59.4237C115.529 60.1147 116.359 60.4601 117.367 60.4601C118.556 60.4601 119.607 59.8961 120.522 58.7681L121.92 60.2032C120.772 61.6679 119.182 62.4002 117.149 62.4002C115.482 62.4002 114.14 61.8598 113.12 60.7791C112.147 59.7396 111.661 58.399 111.661 56.7572C111.661 55.4225 111.978 54.262 112.613 53.2757C113.178 52.4016 113.933 51.7668 114.877 51.3711C115.523 51.0994 116.214 50.9636 116.948 50.9636C118.119 50.9636 119.118 51.2943 119.945 51.9557C120.801 52.629 121.378 53.571 121.675 54.7817C121.809 55.3309 121.876 55.9097 121.876 56.518V57.1381ZM119.534 55.4107C119.488 54.8024 119.33 54.2945 119.062 53.8869C118.556 53.1369 117.827 52.7619 116.878 52.7619C116.027 52.7619 115.328 53.1103 114.78 53.8072C114.443 54.2383 114.233 54.7728 114.151 55.4107H119.534Z" fill="#0070F2"/>
+      <path d="M31.9557 24.5583C30.4333 24.753 29.0465 25.0106 27.4973 25.3764C27.0145 32.7375 28.6787 39.7976 32.8207 46.0121C36.3813 51.3555 40.4781 54.5197 46.044 58.1973C45.6536 58.5966 45.1605 59.0784 44.7105 59.456L43.1943 60.7244C41.0411 59.2534 38.7379 57.7293 36.7901 55.9357C34.4274 53.7567 31.9948 51.4597 30.1703 48.8814C25.5188 42.307 23.3019 34.6156 23.5073 26.6901C21.9643 27.2899 20.7295 27.8799 19.3879 28.5997C18.2579 43.3336 26.7248 55.9534 40.0775 62.7737L36.7593 64.64C24.5264 58.63 16.3574 46.9522 15.5191 33.8034C15.4144 32.1298 15.3322 30.6902 15.4986 29.0894L15.7903 26.3027C20.2508 23.6792 25.0339 21.8325 30.2093 21.0164C32.2167 20.6998 36.1532 20.3674 38.0085 20.5169L42.8368 20.9023C43.147 22.8316 43.1285 24.458 43.1532 26.342C43.2107 30.6686 42.7484 33.1091 41.489 37.4573C40.1823 35.1938 39.7426 32.9518 39.2577 30.5191C39.0995 29.7266 39.3317 28.8927 39.3317 28.1061L39.3255 24.2338L35.9704 24.2299C35.58 30.759 37.914 37.9018 41.5711 43.3238C44.0942 47.0604 47.1945 50.0005 51.2194 52.4666L48.8649 55.448C47.2048 54.4529 45.9618 53.3181 44.5523 52.0536C41.4109 49.2354 38.9701 45.9453 36.6751 42.4526C33.8316 38.1299 31.7523 29.8583 31.9557 24.5583Z" fill="#0070F2"/>
+      <path d="M58.012 33.011C57.638 39.2669 56.0252 44.7419 52.6249 50.2662L49.4855 48.0537C52.9885 42.4862 54.6445 35.3002 54.0528 28.8241L53.7508 24.2144L57.6791 26.2321L58.0263 29.8232C58.1311 30.8969 58.0757 31.9392 58.012 33.011Z" fill="#0070F2"/>
+      <path d="M48.0434 43.7368L47.051 45.7939L44.3123 42.6198C46.9462 37.3256 47.7311 31.471 47.2544 25.5613L46.9483 21.7539L50.8129 22.9555C52.134 29.4985 50.9116 37.7897 48.0434 43.7368Z" fill="#0070F2"/>
+    </svg>
+  </div>
+
+  <div class="header-divider"></div>
+  <span class="header-title">Design System</span>
+
+  <div class="global-search">
+    <span class="search-icon">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="rgba(255,255,255,0.35)">
+        <path d="M7 1a6 6 0 0 1 4.738 9.678l3.042 3.042a.75.75 0 1 1-1.06 1.06l-3.042-3.042A6 6 0 1 1 7 1Zm0 1.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"/>
+      </svg>
+    </span>
+    <input type="text" id="globalSearch" placeholder="Buscar en el sistema..." oninput="searchComponents(this.value)">
+  </div>
+
+  <span class="header-version">v1.5.0</span>
+</header>
+
+
+<!-- ============================================================
+     APP BODY
+============================================================ -->
+<div class="app-body">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="nav-section">
+      <div class="nav-section-label">Fundaciones</div>
+      <a class="nav-item" data-target="colores" href="#colores" onclick="return navTo('colores')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0a8 8 0 1 0 0 16c.828 0 1.5-.672 1.5-1.5 0-.39-.149-.74-.39-1.006-.235-.26-.385-.61-.385-.994 0-.828.672-1.5 1.5-1.5H12a4 4 0 0 0 4-4c0-3.866-3.582-7-8-7Zm-4.5 8a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Zm2.5-3a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Zm5 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Zm2.5 3a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Z"/>
+          </svg>
+        </span>
+        Colores
+        <span class="nav-badge new">Nuevo</span>
+      </a>
+      <a class="nav-item" data-target="iconografia" href="#iconografia" onclick="return navTo('iconografia')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm1.68 4.262a.75.75 0 0 1 1.14.976l-3 3.5a.758.758 0 0 1-1.1.042l-1.5-1.5a.75.75 0 1 1 1.06-1.06l.927.926 2.474-2.884Z"/>
+          </svg>
+        </span>
+        Iconografía SAP
+        <span class="nav-badge">17</span>
+      </a>
+    </div>
+
+    <div class="nav-separator"></div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Componentes</div>
+      <a class="nav-item active" data-target="filtros" href="#filtros" onclick="return navTo('filtros')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <path d="M7 1a6 6 0 0 1 4.738 9.678l3.042 3.042a.75.75 0 1 1-1.06 1.06l-3.042-3.042A6 6 0 1 1 7 1Zm0 1.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"/>
+          </svg>
+        </span>
+        Filtros
+        <span class="nav-badge new">Estable</span>
+      </a>
+      <a class="nav-item" data-target="tablas" href="#tablas" onclick="return navTo('tablas')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <path d="M10.25 0C11.216 0 12 .784 12 1.75V3.5h2.25a.75.75 0 0 1 0 1.5h-.75v9.25A1.75 1.75 0 0 1 11.75 16h-7.5a1.75 1.75 0 0 1-1.741-1.571L2.5 5h-.75a.75.75 0 0 1 0-1.5H4V1.75C4 .784 4.784 0 5.75 0h4.5Z"/>
+          </svg>
+        </span>
+        Tablas
+        <span class="nav-badge new">Nuevo</span>
+      </a>
+      <a class="nav-item" data-target="formularios" href="#formularios" onclick="return navTo('formularios')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <path d="M11.25 0a.75.75 0 0 1 .75.75V2c1.583 0 3 1.058 3 2.75v8.5A2.75 2.75 0 0 1 12.25 16h-8.5A2.75 2.75 0 0 1 1 13.25v-8.5C1 3.058 2.417 2 4 2V.75a.75.75 0 0 1 1.5 0V2h5V.75a.75.75 0 0 1 .75-.75Z"/>
+          </svg>
+        </span>
+        Formularios
+        <span class="nav-badge new">Nuevo</span>
+      </a>
+      <a class="nav-item" href="#" onclick="return false" style="opacity:0.45; cursor:not-allowed;">
+        <span class="nav-icon">
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Z"/>
+          </svg>
+        </span>
+        Botones
+        <span class="nav-badge">Pronto</span>
+      </a>
+      <a class="nav-item" href="#" onclick="return false" style="opacity:0.45; cursor:not-allowed;">
+        <span class="nav-icon">
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <path d="M6.491 1.856a1.75 1.75 0 0 1 3.01-.001l6.248 10.504c.694 1.166-.147 2.644-1.504 2.644H1.752c-1.357 0-2.197-1.478-1.504-2.644Z"/>
+          </svg>
+        </span>
+        Mensajes
+        <span class="nav-badge">Pronto</span>
+      </a>
+    </div>
+
+    <div class="nav-separator"></div>
+
+    <div class="nav-section">
+      <div class="nav-section-label">Patrones</div>
+      <a class="nav-item" href="#" onclick="return false" style="opacity:0.45; cursor:not-allowed;">
+        <span class="nav-icon">
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8.558 8.248l2.25 2.5a.75.75 0 0 1-1.116 1.004l-.942-1.048v3.546a.75.75 0 0 1-1.5 0v-3.546l-.942 1.048a.75.75 0 0 1-1.116-1.004l2.25-2.5a.758.758 0 0 1 1.116 0Z"/>
+          </svg>
+        </span>
+        Creación de registro
+        <span class="nav-badge">Pronto</span>
+      </a>
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN CONTENT -->
+  <main class="content">
+
+    <!-- =====================================================
+         FUNDACIÓN: COLORES
+    ===================================================== -->
+    <section class="component-section" id="colores" data-search-keywords="colores color tokens paleta navy azul blue semantico success error warning advertencia hex variables">
+
+      <div class="component-header">
+        <div class="component-meta">
+          <span class="component-name">Colores</span>
+          <span class="component-badge foundation">Fundación</span>
+        </div>
+        <div class="accent-bar"></div>
+        <p class="component-desc">
+          Paleta de tokens de color de PDP Suite. Cada token está disponible como variable CSS
+          (<code style="font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:3px">var(--token)</code>)
+          y mapea a los colores definidos en Figma y al tema SAP Horizon. Haz clic en cualquier muestra para copiar su valor hexadecimal.
+        </p>
+      </div>
+
+      <!-- Marca -->
+      <div class="token-group">
+        <div class="token-group-title">Marca</div>
+        <div class="swatch-grid">
+          <div class="swatch-card" onclick="copyHex(this, '#050A16')">
+            <div class="swatch-color" style="background:#050A16"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Navy</div><div class="swatch-var">--navy</div><div class="swatch-hex">#050A16</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#0070F2')">
+            <div class="swatch-color" style="background:#0070F2"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Blue (primario)</div><div class="swatch-var">--blue</div><div class="swatch-hex">#0070F2</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#0058C4')">
+            <div class="swatch-color" style="background:#0058C4"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Blue hover</div><div class="swatch-var">--blue-hover</div><div class="swatch-hex">#0058C4</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#EBF3FE')">
+            <div class="swatch-color is-light" style="background:#EBF3FE"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Blue light</div><div class="swatch-var">--blue-light</div><div class="swatch-hex">#EBF3FE</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Superficie y texto -->
+      <div class="token-group">
+        <div class="token-group-title">Superficie y texto</div>
+        <div class="swatch-grid">
+          <div class="swatch-card" onclick="copyHex(this, '#F8FAFC')">
+            <div class="swatch-color is-light" style="background:#F8FAFC"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Surface</div><div class="swatch-var">--surface</div><div class="swatch-hex">#F8FAFC</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#F1F5F9')">
+            <div class="swatch-color is-light" style="background:#F1F5F9"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Surface 2</div><div class="swatch-var">--surface-2</div><div class="swatch-hex">#F1F5F9</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#E2E8F0')">
+            <div class="swatch-color is-light" style="background:#E2E8F0"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Border</div><div class="swatch-var">--border</div><div class="swatch-hex">#E2E8F0</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#0F172A')">
+            <div class="swatch-color" style="background:#0F172A"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Text primary</div><div class="swatch-var">--text-primary</div><div class="swatch-hex">#0F172A</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#62748B')">
+            <div class="swatch-color" style="background:#62748B"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Text secondary</div><div class="swatch-var">--text-secondary</div><div class="swatch-hex">#62748B</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#556B82')">
+            <div class="swatch-color" style="background:#556B82"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Slate</div><div class="swatch-var">--slate</div><div class="swatch-hex">#556B82</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#94A3B8')">
+            <div class="swatch-color" style="background:#94A3B8"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Text muted</div><div class="swatch-var">--text-muted</div><div class="swatch-hex">#94A3B8</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Semánticos -->
+      <div class="token-group">
+        <div class="token-group-title">Semánticos</div>
+        <div class="swatch-grid">
+          <div class="swatch-card" onclick="copyHex(this, '#256F3A')">
+            <div class="swatch-color" style="background:#256F3A"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Success</div><div class="swatch-var">--success</div><div class="swatch-hex">#256F3A</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#E8F5EE')">
+            <div class="swatch-color is-light" style="background:#E8F5EE"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Success bg</div><div class="swatch-var">--success-bg</div><div class="swatch-hex">#E8F5EE</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#AA0808')">
+            <div class="swatch-color" style="background:#AA0808"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Error</div><div class="swatch-var">--error</div><div class="swatch-hex">#AA0808</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#FCE8E8')">
+            <div class="swatch-color is-light" style="background:#FCE8E8"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Error bg</div><div class="swatch-var">--error-bg</div><div class="swatch-hex">#FCE8E8</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#D97706')">
+            <div class="swatch-color" style="background:#D97706"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Warning</div><div class="swatch-var">--warning</div><div class="swatch-hex">#D97706</div></div>
+          </div>
+          <div class="swatch-card" onclick="copyHex(this, '#FEF3C7')">
+            <div class="swatch-color is-light" style="background:#FEF3C7"><span class="copy-pill">Copiar</span></div>
+            <div class="swatch-info"><div class="swatch-name">Warning bg</div><div class="swatch-var">--warning-bg</div><div class="swatch-hex">#FEF3C7</div></div>
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /colores -->
+
+
+    <!-- =====================================================
+         FUNDACIÓN: ICONOGRAFÍA SAP
+    ===================================================== -->
+    <section class="component-section" id="iconografia" data-search-keywords="iconos iconografia sap fiori uri icon editar ver eliminar buscar fechas adjuntar llave rotar publicar exito error advertencia">
+
+      <div class="component-header">
+        <div class="component-meta">
+          <span class="component-name">Iconografía SAP</span>
+          <span class="component-badge foundation">Fundación</span>
+        </div>
+        <div class="accent-bar"></div>
+        <p class="component-desc">
+          Catálogo oficial de iconos SAP Fiori utilizados en PDP Suite para cada acción de la interfaz.
+          Usar siempre el prefijo <code style="font-size:12px;background:var(--blue-light);color:var(--blue);padding:1px 5px;border-radius:3px">sap-icon://</code>.
+          Haz clic en el código para copiarlo al portapapeles.
+        </p>
+      </div>
+
+      <div class="icon-toolbar">
+        <input type="text" class="icon-search-input" id="iconSearch" placeholder="Buscar acción o icono..." oninput="filterIcons(this.value)">
+        <span class="icon-count-badge" id="iconCountBadge">17 iconos</span>
+      </div>
+
+      <!-- CRUD -->
+      <div class="icon-category">
+        <div class="icon-category-label">Acciones CRUD</div>
+        <div class="icon-grid">
+
+          <div class="icon-card" data-name="editar edit">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="edit"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Editar</div><div class="icon-action-desc">Abrir modo edición de un registro</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://edit')"><code class="uri-code">sap-icon://edit</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">Button</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://edit</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Editar</span><span class="s">"</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card" data-name="ver show visualizar detalle">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="show"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Ver / Visualizar</div><div class="icon-action-desc">Abrir vista de detalle en modo lectura</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://show')"><code class="uri-code">sap-icon://show</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">Button</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://show</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Ver</span><span class="s">"</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card" data-name="eliminar delete borrar">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="delete"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Eliminar</div><div class="icon-action-desc">Eliminar o borrar un registro</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://delete')"><code class="uri-code">sap-icon://delete</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">Button</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://delete</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Eliminar</span><span class="s">"</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Reject</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card" data-name="buscar search filtrar">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="search"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Buscar</div><div class="icon-action-desc">Búsqueda y filtrado de registros</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://search')"><code class="uri-code">sap-icon://search</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">SearchField</span>
+  <span class="a">placeholder</span><span class="s">="</span><span class="v">Buscar...</span><span class="s">"</span>
+  <span class="a">showSearchButton</span><span class="s">="</span><span class="v">true</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Gestión de Datos -->
+      <div class="icon-category">
+        <div class="icon-category-label">Gestión de Datos</div>
+        <div class="icon-grid">
+
+          <div class="icon-card" data-name="fechas dates calendario appointment periodo">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="appointment-2"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Fechas / Período</div><div class="icon-action-desc">Selector de fechas y rangos temporales</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://appointment-2')"><code class="uri-code">sap-icon://appointment-2</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">DateRangePicker</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://appointment-2</span><span class="s">"</span>
+  <span class="a">placeholder</span><span class="s">="</span><span class="v">Seleccionar período</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card" data-name="adjuntar subir archivo upload browse folder">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="browse-folder"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Adjuntar / Subir archivo</div><div class="icon-action-desc">Seleccionar y adjuntar documentos</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://browse-folder')"><code class="uri-code">sap-icon://browse-folder</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">upload-collection</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://browse-folder</span><span class="s">"</span>
+  <span class="a">multiple</span><span class="s">="</span><span class="v">true</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Seguridad y Acceso -->
+      <div class="icon-category">
+        <div class="icon-category-label">Seguridad y Acceso</div>
+        <div class="icon-grid">
+
+          <div class="icon-card" data-name="llave acceso key seguridad credentials">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="key"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Llave de Acceso</div><div class="icon-action-desc">Gestión de credenciales y tokens de acceso</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://key')"><code class="uri-code">sap-icon://key</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">Button</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://key</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Ver credencial</span><span class="s">"</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card" data-name="rotar llave synchronize renovar rotate">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="synchronize"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Rotar Llave</div><div class="icon-action-desc">Renovar o rotar credenciales de acceso</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://synchronize')"><code class="uri-code">sap-icon://synchronize</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">Button</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://synchronize</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Rotar llave</span><span class="s">"</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Emphasized</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card" data-name="publicar version publish generate shortcut deploy">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="generate-shortcut"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Publicar Versión</div><div class="icon-action-desc">Publicar o desplegar una nueva versión</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://generate-shortcut')"><code class="uri-code">sap-icon://generate-shortcut</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">Button</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://generate-shortcut</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Publicar</span><span class="s">"</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Accept</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Riesgo y Cumplimiento -->
+      <div class="icon-category">
+        <div class="icon-category-label">Riesgo y Cumplimiento</div>
+        <div class="icon-grid">
+
+          <div class="icon-card" data-name="mapa de calor heatmap chart matriz riesgo calor">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="heatmap-chart"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Mapa de calor</div><div class="icon-action-desc">Matriz de calor para visualización de niveles</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://heatmap-chart')"><code class="uri-code">sap-icon://heatmap-chart</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">Button</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://heatmap-chart</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Mapa de calor</span><span class="s">"</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card" data-name="riesgos riesgo alert alerta peligro">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="alert"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Riesgos</div><div class="icon-action-desc">Gestión e identificación de riesgos</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://alert')"><code class="uri-code">sap-icon://alert</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">Button</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://alert</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Riesgos</span><span class="s">"</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card" data-name="controles seguridad shield escudo proteccion control">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="shield"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Controles (seguridad)</div><div class="icon-action-desc">Controles de seguridad y protección</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://shield')"><code class="uri-code">sap-icon://shield</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">Button</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://shield</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Controles</span><span class="s">"</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card" data-name="evaluaciones evaluacion monitoring end user experience assessment">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="end-user-experience-monitoring"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Evaluaciones</div><div class="icon-action-desc">Evaluación y monitoreo de cumplimiento</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://end-user-experience-monitoring')"><code class="uri-code">sap-icon://end-user-experience-monitoring</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">Button</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://end-user-experience-monitoring</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Evaluaciones</span><span class="s">"</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Estado -->
+      <div class="icon-category">
+        <div class="icon-category-label">Iconos de Estado</div>
+        <div class="icon-grid">
+
+          <div class="icon-card" data-name="informacion information ayuda tooltip info">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="information"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Información</div><div class="icon-action-desc">Ayuda contextual y mensajes informativos</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://information')"><code class="uri-code">sap-icon://information</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">MessageStrip</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Information</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Información complementaria</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card variant-success" data-name="exito success correcto ok mensaje">
+            <div class="icon-card-top">
+              <div class="icon-preview success"><div data-sap-icon="message-success"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Éxito</div><div class="icon-action-desc">Operación completada exitosamente</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://message-success')"><code class="uri-code">sap-icon://message-success</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">MessageStrip</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Success</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Operación exitosa</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card variant-error" data-name="error fallo incorrecto mensaje">
+            <div class="icon-card-top">
+              <div class="icon-preview error"><div data-sap-icon="message-error"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Error</div><div class="icon-action-desc">Operación fallida o estado de error</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://message-error')"><code class="uri-code">sap-icon://message-error</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">MessageStrip</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Error</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Ha ocurrido un error</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card variant-warning" data-name="advertencia warning alerta mensaje">
+            <div class="icon-card-top">
+              <div class="icon-preview warning"><div data-sap-icon="message-warning"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Advertencia</div><div class="icon-action-desc">Estado de alerta o acción que requiere atención</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://message-warning')"><code class="uri-code">sap-icon://message-warning</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">MessageStrip</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Warning</span><span class="s">"</span>
+  <span class="a">text</span><span class="s">="</span><span class="v">Revisa esta acción</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="icon-empty" id="iconEmpty">No se encontraron iconos para esa búsqueda.</div>
+
+    </section><!-- /iconografia -->
+
+
+    <!-- =====================================================
+         COMPONENTE: FILTROS
+    ===================================================== -->
+    <section class="component-section" id="filtros" data-search-keywords="filtros buscar busqueda limpiar pais nombre input select search filter">
+
+      <div class="component-header">
+        <div class="component-meta">
+          <span class="component-name">Filtros</span>
+          <span class="component-badge">Estable</span>
+        </div>
+        <div class="accent-bar"></div>
+        <p class="component-desc">
+          Barra de filtros que permite al usuario acotar los registros visibles en tablas y listados.
+          Los filtros se aplican automáticamente al perder el foco (<code style="font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:3px">onBlur</code>),
+          sin necesidad de un botón de búsqueda explícito. El enlace <em>Limpiar filtros</em> se activa solo cuando al menos un filtro tiene valor.
+        </p>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(this, 'tab-demo')">Demo interactivo</div>
+        <div class="tab" onclick="switchTab(this, 'tab-behavior')">Comportamiento</div>
+        <div class="tab" onclick="switchTab(this, 'tab-code')">Uso en SAPUI5</div>
+      </div>
+
+      <!-- TAB: DEMO -->
+      <div class="tab-panel active" id="tab-demo">
+        <div class="demo-canvas">
+          <div class="demo-canvas-toolbar">
+            <div class="demo-toolbar-dot" style="background:#ff5f57"></div>
+            <div class="demo-toolbar-dot" style="background:#febc2e"></div>
+            <div class="demo-toolbar-dot" style="background:#28c840"></div>
+            <span class="demo-canvas-label">Vista previa</span>
+          </div>
+          <div class="demo-canvas-body">
+
+            <!-- ===== FILTER BAR ===== -->
+            <div class="sap-filter-bar">
+              <div class="sap-filter-fields">
+
+                <div class="sap-filter-field">
+                  <label class="sap-filter-label" for="filterNombre">Nombre:</label>
+                  <input
+                    class="sap-filter-input"
+                    type="text"
+                    id="filterNombre"
+                    placeholder="Buscar por nombre"
+                    onblur="applyFilters()"
+                    oninput="checkClearBtn()"
+                  >
+                </div>
+
+                <div class="sap-filter-field">
+                  <label class="sap-filter-label" for="filterPais">País exportación:</label>
+                  <div class="sap-filter-select-wrap">
+                    <select
+                      class="sap-filter-select"
+                      id="filterPais"
+                      onblur="applyFilters()"
+                      onchange="applyFilters(); checkClearBtn()"
+                    >
+                      <option value="">Seleccione país</option>
+                      <option value="AR">Argentina</option>
+                      <option value="BR">Brasil</option>
+                      <option value="CL">Chile</option>
+                      <option value="CO">Colombia</option>
+                      <option value="MX">México</option>
+                      <option value="PE">Perú</option>
+                    </select>
+                    <span class="sap-select-chevron">
+                      <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 3L5 7L9 3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+
+                <button class="sap-filter-clear" id="clearFiltersBtn" onclick="clearFilters()">
+                  Limpiar filtros
+                </button>
+
+              </div>
+            </div>
+            <!-- ===== END FILTER BAR ===== -->
+
+            <!-- Resultados -->
+            <div class="demo-table-wrap">
+              <div class="demo-table-status">
+                <span id="resultCount">Mostrando 8 de 8 registros</span>
+                <span class="filter-applied-toast" id="filterToast">
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm1.68 4.262a.75.75 0 0 1 1.14.976l-3 3.5a.758.758 0 0 1-1.1.042l-1.5-1.5a.75.75 0 1 1 1.06-1.06l.927.926 2.474-2.884Z"/></svg>
+                  Filtro aplicado
+                </span>
+              </div>
+
+              <table class="demo-table" id="demoTable">
+                <thead>
+                  <tr>
+                    <th>Nombre del tratamiento</th>
+                    <th>País exportación</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody id="demoTableBody">
+                  <!-- Rows inserted by JS -->
+                </tbody>
+              </table>
+
+              <div class="empty-state" id="emptyState">
+                <svg width="36" height="36" viewBox="0 0 16 16" fill="var(--text-muted)">
+                  <path d="M7 1a6 6 0 0 1 4.738 9.678l3.042 3.042a.75.75 0 1 1-1.06 1.06l-3.042-3.042A6 6 0 1 1 7 1Zm0 1.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"/>
+                </svg>
+                No se encontraron registros con los filtros aplicados.
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div><!-- /tab-demo -->
+
+      <!-- TAB: COMPORTAMIENTO -->
+      <div class="tab-panel" id="tab-behavior">
+        <div class="behavior-list">
+
+          <div class="behavior-item">
+            <div class="behavior-icon blue">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--blue)">
+                <path d="M7 1a6 6 0 0 1 4.738 9.678l3.042 3.042a.75.75 0 1 1-1.06 1.06l-3.042-3.042A6 6 0 1 1 7 1Zm0 1.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"/>
+              </svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Filtrado automático al perder el foco (onBlur)</strong>
+              <p>Cuando el usuario termina de escribir en el campo de texto o selecciona una opción en el dropdown y pasa a otro elemento, el filtro se ejecuta automáticamente. No se requiere presionar Enter ni ningún botón de búsqueda.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon green">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--success)">
+                <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm1.68 4.262a.75.75 0 0 1 1.14.976l-3 3.5a.758.758 0 0 1-1.1.042l-1.5-1.5a.75.75 0 1 1 1.06-1.06l.927.926 2.474-2.884Z"/>
+              </svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Activación del enlace "Limpiar filtros"</strong>
+              <p>El enlace <em>Limpiar filtros</em> aparece en estado inactivo (azul con 40% de opacidad, no clickeable) cuando ningún filtro tiene valor. Se activa (azul sólido, clickeable) en el momento en que cualquier filtro recibe un valor, sin esperar el onBlur.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon slate">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--slate)">
+                <path d="M4.25 10a.75.75 0 0 1 0 1.5H2.118c1.409 1.823 3.647 3 5.882 3 2.754 0 5.345-1.543 6.575-4.077a.75.75 0 0 1 1.35.654C14.435 14.147 11.305 16 8 16c-2.435 0-4.821-1.127-6.5-2.917v1.167a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 .75 10h3.5ZM8 0a8.864 8.864 0 0 1 6.5 2.834V1.75a.75.75 0 0 1 1.5 0v3.5a.75.75 0 0 1-.75.75h-3.5a.75.75 0 0 1 0-1.5h2.179c-1.37-1.887-3.59-3-5.929-3-2.657 0-5.318 1.663-6.585 4.097a.75.75 0 0 1-1.33-.694C1.598 2 4.757 0 8 0Z"/>
+              </svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Limpiar filtros — restablecer estado</strong>
+              <p>Al hacer clic en <em>Limpiar filtros</em>, todos los campos vuelven a su estado vacío, la tabla muestra todos los registros y el enlace regresa a su estado inactivo.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon warning">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--warning)">
+                <path d="M6.491 1.856a1.75 1.75 0 0 1 3.01-.001l6.248 10.504c.694 1.166-.147 2.644-1.504 2.644H1.752c-1.357 0-2.197-1.478-1.504-2.644L6.491 1.856Zm1.72.766a.25.25 0 0 0-.43 0L1.536 13.126a.25.25 0 0 0 .215.377h12.493a.25.25 0 0 0 .215-.377L8.211 2.622ZM8 10.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2ZM8 5a.75.75 0 0 1 .75.75v2.993A.756.756 0 0 1 8 9.5a.755.755 0 0 1-.756-.75l.006-3A.75.75 0 0 1 8 5Z"/>
+              </svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Filtros combinados (AND)</strong>
+              <p>Cuando el usuario activa más de un filtro, la lógica es <em>AND</em>: solo se muestran registros que cumplan con todos los criterios simultáneamente.</p>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /tab-behavior -->
+
+      <!-- TAB: CÓDIGO SAPUI5 -->
+      <div class="tab-panel" id="tab-code">
+
+        <p class="code-label">XML View — FilterBar</p>
+        <div class="code-block"><pre><span class="s">&lt;</span><span class="t">filterBar:FilterBar</span>
+  <span class="a">id</span><span class="s">="</span><span class="v">filterBar</span><span class="s">"</span>
+  <span class="a">showGoButton</span><span class="s">="</span><span class="v">false</span><span class="s">"</span>
+  <span class="a">search</span><span class="s">="</span><span class="v">.onSearch</span><span class="s">"</span>
+  <span class="a">filterChange</span><span class="s">="</span><span class="v">.onFilterChange</span><span class="s">"</span><span class="s">&gt;</span>
+
+  <span class="s">&lt;</span><span class="t">filterBar:filterItems</span><span class="s">&gt;</span>
+
+    <span class="c">&lt;!-- Campo: Nombre --&gt;</span>
+    <span class="s">&lt;</span><span class="t">filterBar:FilterGroupItem</span>
+      <span class="a">name</span><span class="s">="</span><span class="v">nombre</span><span class="s">"</span>
+      <span class="a">label</span><span class="s">="</span><span class="v">Nombre</span><span class="s">"</span>
+      <span class="a">visibleInFilterBar</span><span class="s">="</span><span class="v">true</span><span class="s">"</span><span class="s">&gt;</span>
+      <span class="s">&lt;</span><span class="t">filterBar:control</span><span class="s">&gt;</span>
+        <span class="s">&lt;</span><span class="t">Input</span>
+          <span class="a">id</span><span class="s">="</span><span class="v">inputNombre</span><span class="s">"</span>
+          <span class="a">placeholder</span><span class="s">="</span><span class="v">Buscar por nombre</span><span class="s">"</span>
+          <span class="a">change</span><span class="s">="</span><span class="v">.onSearch</span><span class="s">" /&gt;</span>
+      <span class="s">&lt;/</span><span class="t">filterBar:control</span><span class="s">&gt;</span>
+    <span class="s">&lt;/</span><span class="t">filterBar:FilterGroupItem</span><span class="s">&gt;</span>
+
+    <span class="c">&lt;!-- Campo: País exportación --&gt;</span>
+    <span class="s">&lt;</span><span class="t">filterBar:FilterGroupItem</span>
+      <span class="a">name</span><span class="s">="</span><span class="v">pais</span><span class="s">"</span>
+      <span class="a">label</span><span class="s">="</span><span class="v">País exportación</span><span class="s">"</span>
+      <span class="a">visibleInFilterBar</span><span class="s">="</span><span class="v">true</span><span class="s">"</span><span class="s">&gt;</span>
+      <span class="s">&lt;</span><span class="t">filterBar:control</span><span class="s">&gt;</span>
+        <span class="s">&lt;</span><span class="t">Select</span>
+          <span class="a">id</span><span class="s">="</span><span class="v">selectPais</span><span class="s">"</span>
+          <span class="a">change</span><span class="s">="</span><span class="v">.onSearch</span><span class="s">"</span>
+          <span class="a">items</span><span class="s">="</span><span class="v">{/paises}</span><span class="s">"</span><span class="s">&gt;</span>
+          <span class="s">&lt;</span><span class="t">core:Item</span>
+            <span class="a">key</span><span class="s">="</span><span class="v">{codigo}</span><span class="s">"</span>
+            <span class="a">text</span><span class="s">="</span><span class="v">{nombre}</span><span class="s">" /&gt;</span>
+        <span class="s">&lt;/</span><span class="t">Select</span><span class="s">&gt;</span>
+      <span class="s">&lt;/</span><span class="t">filterBar:control</span><span class="s">&gt;</span>
+    <span class="s">&lt;/</span><span class="t">filterBar:FilterGroupItem</span><span class="s">&gt;</span>
+
+  <span class="s">&lt;/</span><span class="t">filterBar:filterItems</span><span class="s">&gt;</span>
+<span class="s">&lt;/</span><span class="t">filterBar:FilterBar</span><span class="s">&gt;</span></pre></div>
+
+        <p class="code-label" style="margin-top:20px">Controller — lógica de filtrado</p>
+        <div class="code-block"><pre><span class="c">// Ejecutar al perder foco (onBlur) o al cambiar Select</span>
+<span class="t">onSearch</span><span class="s">:</span> <span class="tx">function</span> <span class="s">() {</span>
+  <span class="tx">var</span> sNombre <span class="s">=</span> <span class="tx">this</span><span class="s">.</span><span class="t">byId</span><span class="s">(</span><span class="v">"inputNombre"</span><span class="s">).</span><span class="t">getValue</span><span class="s">()</span><span class="s">.</span><span class="t">toLowerCase</span><span class="s">();</span>
+  <span class="tx">var</span> sPais  <span class="s">=</span> <span class="tx">this</span><span class="s">.</span><span class="t">byId</span><span class="s">(</span><span class="v">"selectPais"</span><span class="s">).</span><span class="t">getSelectedKey</span><span class="s">();</span>
+
+  <span class="tx">var</span> oFilters <span class="s">= [];</span>
+
+  <span class="tx">if</span> <span class="s">(</span>sNombre<span class="s">) {</span>
+    oFilters<span class="s">.</span><span class="t">push</span><span class="s">(</span><span class="tx">new</span> <span class="t">Filter</span><span class="s">(</span><span class="v">"nombre"</span><span class="s">,</span>
+      FilterOperator<span class="s">.</span><span class="t">Contains</span><span class="s">,</span> sNombre<span class="s">));</span>
+  <span class="s">}</span>
+
+  <span class="tx">if</span> <span class="s">(</span>sPais<span class="s">) {</span>
+    oFilters<span class="s">.</span><span class="t">push</span><span class="s">(</span><span class="tx">new</span> <span class="t">Filter</span><span class="s">(</span><span class="v">"pais"</span><span class="s">,</span>
+      FilterOperator<span class="s">.</span><span class="t">EQ</span><span class="s">,</span> sPais<span class="s">));</span>
+  <span class="s">}</span>
+
+  <span class="c">// AND combinado</span>
+  <span class="tx">var</span> oCombined <span class="s">=</span> oFilters<span class="s">.</span><span class="t">length</span>
+    <span class="s">?</span> <span class="tx">new</span> <span class="t">Filter</span><span class="s">({</span> filters<span class="s">:</span> oFilters<span class="s">,</span> and<span class="s">:</span> <span class="tx">true</span> <span class="s">})</span>
+    <span class="s">:</span> <span class="tx">null</span><span class="s">;</span>
+
+  <span class="tx">this</span><span class="s">.</span><span class="t">byId</span><span class="s">(</span><span class="v">"tabla"</span><span class="s">).</span><span class="t">getBinding</span><span class="s">(</span><span class="v">"items"</span><span class="s">).</span><span class="t">filter</span><span class="s">(</span>oCombined<span class="s">);</span>
+
+  <span class="c">// Activar/desactivar "Limpiar filtros"</span>
+  <span class="tx">var</span> bActive <span class="s">= !!(</span>sNombre <span class="s">||</span> sPais<span class="s">);</span>
+  <span class="tx">this</span><span class="s">.</span><span class="t">byId</span><span class="s">(</span><span class="v">"linkLimpiar"</span><span class="s">).</span><span class="t">setEnabled</span><span class="s">(</span>bActive<span class="s">);</span>
+<span class="s">},</span>
+
+<span class="t">onClearFilters</span><span class="s">:</span> <span class="tx">function</span> <span class="s">() {</span>
+  <span class="tx">this</span><span class="s">.</span><span class="t">byId</span><span class="s">(</span><span class="v">"inputNombre"</span><span class="s">).</span><span class="t">setValue</span><span class="s">(</span><span class="v">""</span><span class="s">);</span>
+  <span class="tx">this</span><span class="s">.</span><span class="t">byId</span><span class="s">(</span><span class="v">"selectPais"</span><span class="s">).</span><span class="t">setSelectedKey</span><span class="s">(</span><span class="v">""</span><span class="s">);</span>
+  <span class="tx">this</span><span class="s">.</span><span class="t">onSearch</span><span class="s">();</span>
+<span class="s">}</span></pre></div>
+
+        <p class="code-label" style="margin-top:20px">Propiedades clave</p>
+        <table class="prop-table">
+          <thead>
+            <tr><th>Propiedad / Evento</th><th>Tipo</th><th>Descripción</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>showGoButton</td><td>Boolean</td><td>Ocultar botón "Ir" — el filtro aplica en blur/change</td></tr>
+            <tr><td>filterChange</td><td>Event</td><td>Se dispara cada vez que cambia cualquier filtro</td></tr>
+            <tr><td>Input › change</td><td>Event</td><td>Se dispara al perder foco (onBlur)</td></tr>
+            <tr><td>Select › change</td><td>Event</td><td>Se dispara al seleccionar una opción</td></tr>
+            <tr><td>Filter (AND)</td><td>sap.ui.model.Filter</td><td>Combinar múltiples filtros con <code>and: true</code></td></tr>
+            <tr><td>Link › setEnabled(false)</td><td>Method</td><td>Estado inactivo de "Limpiar filtros"</td></tr>
+          </tbody>
+        </table>
+
+      </div><!-- /tab-code -->
+
+    </section><!-- /filtros -->
+
+
+    <!-- =====================================================
+         COMPONENTE: TABLAS
+    ===================================================== -->
+    <section class="component-section" id="tablas" data-search-keywords="tablas tabla listado registros lista grid columnas zebra acciones crear formulario filas">
+
+      <div class="component-header">
+        <div class="component-meta">
+          <span class="component-name">Tablas</span>
+          <span class="component-badge">Estable</span>
+        </div>
+        <div class="accent-bar"></div>
+        <p class="component-desc">
+          Patrón estándar para listados y registros en PDP Suite. La tabla vive dentro de una tarjeta con
+          encabezado (título, subtítulo y acción primaria), filas alternadas para mejorar la lectura,
+          y una columna de acciones por fila (Ver, Editar, Eliminar). Los valores vacíos se muestran como
+          <code style="font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:3px">-</code>.
+        </p>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(this, 'tab-demo-tablas')">Demo interactivo</div>
+        <div class="tab" onclick="switchTab(this, 'tab-behavior-tablas')">Comportamiento</div>
+        <div class="tab" onclick="switchTab(this, 'tab-code-tablas')">Uso en SAPUI5</div>
+      </div>
+
+      <!-- TAB: DEMO -->
+      <div class="tab-panel active" id="tab-demo-tablas">
+        <div class="demo-canvas">
+          <div class="demo-canvas-toolbar">
+            <div class="demo-toolbar-dot" style="background:#ff5f57"></div>
+            <div class="demo-toolbar-dot" style="background:#febc2e"></div>
+            <div class="demo-toolbar-dot" style="background:#28c840"></div>
+            <span class="demo-canvas-label">Vista previa</span>
+          </div>
+          <div class="demo-canvas-body" style="padding:24px; background:var(--surface);">
+
+            <div class="pdp-table-card">
+              <div class="pdp-table-head">
+                <div class="pdp-table-titles">
+                  <div class="pdp-table-title">Registros de Formularios</div>
+                  <div class="pdp-table-subtitle">Listado general de formularios</div>
+                </div>
+                <button class="pdp-btn-primary" onclick="showToast('Crear formulario')">
+                  Crear formulario
+                </button>
+              </div>
+
+              <div class="pdp-table-scroll">
+                <table class="pdp-table">
+                  <thead>
+                    <tr>
+                      <th>Formulario</th>
+                      <th>Descripción</th>
+                      <th class="col-center">Tipo</th>
+                      <th class="col-center">Última modificación</th>
+                      <th class="col-actions">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody id="formTableBody"><!-- Rows inserted by JS --></tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div><!-- /tab-demo-tablas -->
+
+      <!-- TAB: COMPORTAMIENTO -->
+      <div class="tab-panel" id="tab-behavior-tablas">
+        <div class="behavior-list">
+
+          <div class="behavior-item">
+            <div class="behavior-icon blue">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--blue)"><path d="M10.25 0C11.216 0 12 .784 12 1.75V3.5h2.25a.75.75 0 0 1 0 1.5h-.75v9.25A1.75 1.75 0 0 1 11.75 16h-7.5a1.75 1.75 0 0 1-1.741-1.571L2.5 5h-.75a.75.75 0 0 1 0-1.5H4V1.75C4 .784 4.784 0 5.75 0h4.5Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Encabezado con acción primaria</strong>
+              <p>Cada tabla vive en una tarjeta con título, subtítulo descriptivo y un botón primario de creación alineado a la derecha (por ejemplo, <em>Crear formulario</em>).</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon slate">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--slate)"><path d="M2 2h12v3H2V2Zm0 4.5h12V10H2V6.5ZM2 11.5h12V14H2v-2.5Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Filas alternadas (zebra) y hover</strong>
+              <p>Las filas pares llevan un fondo gris suave (<code>--surface</code>) para facilitar la lectura horizontal. Al pasar el cursor, la fila se resalta en azul claro (<code>--blue-light</code>).</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon blue">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--blue)"><path d="M8.004 2c3.12 0 5.67 2.323 7.35 4.754.178.259.646.908.646 1.25 0 .341-.468.983-.646 1.242-1.68 2.43-4.23 4.754-7.35 4.754-3.12 0-5.67-2.323-7.35-4.754C.477 8.988 0 8.324 0 7.996c0-.331.476-.984.655-1.242C2.334 4.324 4.884 2 8.005 2Zm0 3.5a3.001 3.001 0 1 0 0 6.002 3.001 3.001 0 0 0 0-6.002Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Columna de acciones por fila</strong>
+              <p>Alineada a la derecha, ofrece <em>Ver</em> (<code>sap-icon://show</code>), <em>Editar</em> (<code>sap-icon://edit</code>) y <em>Eliminar</em> (<code>sap-icon://delete</code>). La acción destructiva resalta en rojo al pasar el cursor.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon warning">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--warning)"><path d="M2 7h12v2H2z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Valores vacíos y descripciones largas</strong>
+              <p>Cuando un campo no tiene valor se muestra un guion <code>-</code> en color atenuado. Las descripciones extensas se truncan con elipsis para mantener la altura de fila constante.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon green">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--success)"><path d="M1 3.75A.75.75 0 0 1 1.75 3h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 3.75Zm0 4A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75Zm0 4a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1-.75-.75Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Tabla con scroll horizontal</strong>
+              <p>En viewports angostos la tabla habilita scroll horizontal dentro de la tarjeta, manteniendo el encabezado de la tarjeta siempre visible.</p>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /tab-behavior-tablas -->
+
+      <!-- TAB: CÓDIGO SAPUI5 -->
+      <div class="tab-panel" id="tab-code-tablas">
+
+        <p class="code-label">XML View — sap.m.Table</p>
+        <div class="code-block"><pre><span class="s">&lt;</span><span class="t">Table</span>
+  <span class="a">id</span><span class="s">="</span><span class="v">tablaFormularios</span><span class="s">"</span>
+  <span class="a">items</span><span class="s">="</span><span class="v">{/formularios}</span><span class="s">"</span>
+  <span class="a">alternateRowColors</span><span class="s">="</span><span class="v">true</span><span class="s">"</span>
+  <span class="a">growing</span><span class="s">="</span><span class="v">true</span><span class="s">"</span><span class="s">&gt;</span>
+
+  <span class="c">&lt;!-- Encabezado: título + acción primaria --&gt;</span>
+  <span class="s">&lt;</span><span class="t">headerToolbar</span><span class="s">&gt;</span>
+    <span class="s">&lt;</span><span class="t">OverflowToolbar</span><span class="s">&gt;</span>
+      <span class="s">&lt;</span><span class="t">Title</span> <span class="a">text</span><span class="s">="</span><span class="v">Registros de Formularios</span><span class="s">" /&gt;</span>
+      <span class="s">&lt;</span><span class="t">ToolbarSpacer</span> <span class="s">/&gt;</span>
+      <span class="s">&lt;</span><span class="t">Button</span>
+        <span class="a">text</span><span class="s">="</span><span class="v">Crear formulario</span><span class="s">"</span>
+        <span class="a">type</span><span class="s">="</span><span class="v">Emphasized</span><span class="s">"</span>
+        <span class="a">press</span><span class="s">="</span><span class="v">.onCreate</span><span class="s">" /&gt;</span>
+    <span class="s">&lt;/</span><span class="t">OverflowToolbar</span><span class="s">&gt;</span>
+  <span class="s">&lt;/</span><span class="t">headerToolbar</span><span class="s">&gt;</span>
+
+  <span class="s">&lt;</span><span class="t">columns</span><span class="s">&gt;</span>
+    <span class="s">&lt;</span><span class="t">Column</span><span class="s">&gt;&lt;</span><span class="t">Text</span> <span class="a">text</span><span class="s">="</span><span class="v">Formulario</span><span class="s">" /&gt;&lt;/</span><span class="t">Column</span><span class="s">&gt;</span>
+    <span class="s">&lt;</span><span class="t">Column</span><span class="s">&gt;&lt;</span><span class="t">Text</span> <span class="a">text</span><span class="s">="</span><span class="v">Descripción</span><span class="s">" /&gt;&lt;/</span><span class="t">Column</span><span class="s">&gt;</span>
+    <span class="s">&lt;</span><span class="t">Column</span> <span class="a">hAlign</span><span class="s">="</span><span class="v">Center</span><span class="s">"&gt;&lt;</span><span class="t">Text</span> <span class="a">text</span><span class="s">="</span><span class="v">Tipo</span><span class="s">" /&gt;&lt;/</span><span class="t">Column</span><span class="s">&gt;</span>
+    <span class="s">&lt;</span><span class="t">Column</span> <span class="a">hAlign</span><span class="s">="</span><span class="v">Center</span><span class="s">"&gt;&lt;</span><span class="t">Text</span> <span class="a">text</span><span class="s">="</span><span class="v">Última modificación</span><span class="s">" /&gt;&lt;/</span><span class="t">Column</span><span class="s">&gt;</span>
+    <span class="s">&lt;</span><span class="t">Column</span> <span class="a">hAlign</span><span class="s">="</span><span class="v">End</span><span class="s">"&gt;&lt;</span><span class="t">Text</span> <span class="a">text</span><span class="s">="</span><span class="v">Acciones</span><span class="s">" /&gt;&lt;/</span><span class="t">Column</span><span class="s">&gt;</span>
+  <span class="s">&lt;/</span><span class="t">columns</span><span class="s">&gt;</span>
+
+  <span class="s">&lt;</span><span class="t">items</span><span class="s">&gt;</span>
+    <span class="s">&lt;</span><span class="t">ColumnListItem</span><span class="s">&gt;</span>
+      <span class="s">&lt;</span><span class="t">cells</span><span class="s">&gt;</span>
+        <span class="s">&lt;</span><span class="t">Text</span> <span class="a">text</span><span class="s">="</span><span class="v">{nombre}</span><span class="s">" /&gt;</span>
+        <span class="s">&lt;</span><span class="t">Text</span> <span class="a">text</span><span class="s">="</span><span class="v">{descripcion}</span><span class="s">" /&gt;</span>
+        <span class="s">&lt;</span><span class="t">Text</span> <span class="a">text</span><span class="s">="</span><span class="v">{tipo}</span><span class="s">" /&gt;</span>
+        <span class="s">&lt;</span><span class="t">Text</span> <span class="a">text</span><span class="s">="</span><span class="v">{fechaMod}</span><span class="s">" /&gt;</span>
+        <span class="s">&lt;</span><span class="t">HBox</span> <span class="a">justifyContent</span><span class="s">="</span><span class="v">End</span><span class="s">"&gt;</span>
+          <span class="s">&lt;</span><span class="t">Button</span> <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://show</span><span class="s">"</span>   <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" </span><span class="a">press</span><span class="s">="</span><span class="v">.onView</span><span class="s">" /&gt;</span>
+          <span class="s">&lt;</span><span class="t">Button</span> <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://edit</span><span class="s">"</span>   <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" </span><span class="a">press</span><span class="s">="</span><span class="v">.onEdit</span><span class="s">" /&gt;</span>
+          <span class="s">&lt;</span><span class="t">Button</span> <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://delete</span><span class="s">"</span> <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" </span><span class="a">press</span><span class="s">="</span><span class="v">.onDelete</span><span class="s">" /&gt;</span>
+        <span class="s">&lt;/</span><span class="t">HBox</span><span class="s">&gt;</span>
+      <span class="s">&lt;/</span><span class="t">cells</span><span class="s">&gt;</span>
+    <span class="s">&lt;/</span><span class="t">ColumnListItem</span><span class="s">&gt;</span>
+  <span class="s">&lt;/</span><span class="t">items</span><span class="s">&gt;</span>
+<span class="s">&lt;/</span><span class="t">Table</span><span class="s">&gt;</span></pre></div>
+
+        <p class="code-label" style="margin-top:20px">Propiedades clave</p>
+        <table class="prop-table">
+          <thead>
+            <tr><th>Propiedad / Agregación</th><th>Tipo</th><th>Descripción</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>alternateRowColors</td><td>Boolean</td><td>Activa el rayado zebra de filas</td></tr>
+            <tr><td>growing</td><td>Boolean</td><td>Carga progresiva / paginación "More"</td></tr>
+            <tr><td>headerToolbar</td><td>Toolbar</td><td>Título + ToolbarSpacer + acción primaria</td></tr>
+            <tr><td>Column › hAlign</td><td>TextAlign</td><td><code>Center</code> para Tipo/fecha, <code>End</code> para Acciones</td></tr>
+            <tr><td>ColumnListItem</td><td>Aggregation</td><td>Plantilla de fila enlazada a <code>{/formularios}</code></td></tr>
+            <tr><td>Button › type</td><td>ButtonType</td><td><code>Transparent</code> para las acciones de fila</td></tr>
+          </tbody>
+        </table>
+
+      </div><!-- /tab-code-tablas -->
+
+    </section><!-- /tablas -->
+
+
+    <!-- =====================================================
+         COMPONENTE: FORMULARIOS
+    ===================================================== -->
+    <section class="component-section" id="formularios" data-search-keywords="formularios formulario campos input label obligatorio asterisco placeholder tooltip texto textarea numerico email password contraseña rut adjunto selector fecha checkbox switch modal vista completa validacion">
+
+      <div class="component-header">
+        <div class="component-meta">
+          <span class="component-name">Formularios</span>
+          <span class="component-badge">Estable</span>
+        </div>
+        <div class="accent-bar"></div>
+        <p class="component-desc">
+          Patrón para la captura de datos en PDP Suite. Todo formulario tiene un <strong>título y subtítulo alineados a la izquierda</strong>
+          que envuelven los campos. Los <em>labels</em> van sobre el input, los campos obligatorios llevan un asterisco rojo
+          (<span style="color:var(--required);font-weight:700">*</span>) y todo input tiene un placeholder descriptivo.
+          Se presenta en <strong>vista completa</strong> (acciones en la cabecera) o en <strong>modal</strong> (acciones en el footer);
+          en ambos el orden es <em>secundario → principal</em>, alineado a la derecha.
+        </p>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(this, 'tab-demo-form')">Demo interactivo</div>
+        <div class="tab" onclick="switchTab(this, 'tab-behavior-form')">Comportamiento</div>
+        <div class="tab" onclick="switchTab(this, 'tab-code-form')">Uso en SAPUI5</div>
+      </div>
+
+      <!-- TAB: DEMO -->
+      <div class="tab-panel active" id="tab-demo-form">
+
+        <!-- ===== VISTA COMPLETA ===== -->
+        <p class="code-label" style="margin-bottom:10px">Vista completa — acciones en la cabecera</p>
+        <div class="demo-canvas">
+          <div class="demo-canvas-toolbar">
+            <div class="demo-toolbar-dot" style="background:#ff5f57"></div>
+            <div class="demo-toolbar-dot" style="background:#febc2e"></div>
+            <div class="demo-toolbar-dot" style="background:#28c840"></div>
+            <span class="demo-canvas-label">Vista previa</span>
+          </div>
+          <div class="demo-canvas-body" style="padding:24px; background:var(--surface);">
+
+            <form class="pdp-form-card" id="liaForm" onsubmit="return finalizarForm(event)">
+              <div class="pdp-form-head">
+                <div class="pdp-form-titles">
+                  <div class="pdp-form-title">Información del LIA</div>
+                  <div class="pdp-form-subtitle">Datos generales de la evaluación</div>
+                </div>
+                <div class="pdp-form-actions">
+                  <button type="button" class="pdp-btn-secondary" onclick="showToast('Volver')">Cancelar</button>
+                  <button type="button" class="pdp-btn-secondary" onclick="showToast('Progreso guardado')">Guardar progreso</button>
+                  <button type="submit" class="pdp-btn-primary">Finalizar</button>
+                </div>
+              </div>
+
+              <div class="pdp-form-body">
+                <div class="pdp-form-grid">
+
+                  <div class="pdp-field" data-required>
+                    <label class="pdp-label" for="f-nombre">Nombre <span class="pdp-required">*</span></label>
+                    <input class="pdp-input" type="text" id="f-nombre" placeholder="Ingrese nombre">
+                    <span class="pdp-field-error">Este campo es obligatorio.</span>
+                  </div>
+
+                  <div class="pdp-field">
+                    <label class="pdp-label" for="f-resp">Responsable
+                      <span class="pdp-info" tabindex="0">
+                        <span class="pdp-info-icon" data-sap-icon="information"></span>
+                        <span class="pdp-tooltip">Escriba nombre completo y cargo de la persona responsable.</span>
+                      </span>
+                    </label>
+                    <input class="pdp-input" type="text" id="f-resp" placeholder="Ingrese responsable">
+                  </div>
+
+                  <div class="pdp-field col-span-2" data-required>
+                    <label class="pdp-label" for="f-objetivo">Objetivo <span class="pdp-required">*</span></label>
+                    <textarea class="pdp-textarea" id="f-objetivo" placeholder="Ingrese objetivo"></textarea>
+                    <span class="pdp-field-error">Este campo es obligatorio.</span>
+                  </div>
+
+                  <div class="pdp-field col-span-2">
+                    <label class="pdp-label" for="f-finalidad">Finalidad del tratamiento</label>
+                    <textarea class="pdp-textarea" id="f-finalidad" placeholder="Ingrese finalidad del tratamiento"></textarea>
+                  </div>
+
+                </div>
+              </div>
+            </form>
+
+            <div style="text-align:center; margin-top:18px;">
+              <button class="pdp-btn-secondary" onclick="openFormModal()">Ver el mismo formulario en modal ↗</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ===== CATÁLOGO DE TIPOS DE CAMPO ===== -->
+        <p class="code-label" style="margin:26px 0 10px">Catálogo de tipos de campo</p>
+        <div class="demo-canvas">
+          <div class="demo-canvas-toolbar">
+            <div class="demo-toolbar-dot" style="background:#ff5f57"></div>
+            <div class="demo-toolbar-dot" style="background:#febc2e"></div>
+            <div class="demo-toolbar-dot" style="background:#28c840"></div>
+            <span class="demo-canvas-label">Tipos de input</span>
+          </div>
+          <div class="demo-canvas-body" style="padding:24px;">
+            <div class="pdp-form-grid">
+
+              <div class="pdp-field">
+                <label class="pdp-label">Texto</label>
+                <input class="pdp-input" type="text" placeholder="Ingrese texto">
+              </div>
+
+              <div class="pdp-field">
+                <label class="pdp-label">Numérico</label>
+                <input class="pdp-input" type="number" placeholder="Ingrese un número" min="0">
+              </div>
+
+              <div class="pdp-field">
+                <label class="pdp-label">Email</label>
+                <input class="pdp-input" type="email" placeholder="nombre@empresa.cl">
+              </div>
+
+              <div class="pdp-field">
+                <label class="pdp-label">Teléfono</label>
+                <input class="pdp-input" type="tel" placeholder="+56 9 1234 5678">
+              </div>
+
+              <div class="pdp-field">
+                <label class="pdp-label">Contraseña</label>
+                <div class="pdp-input-wrap">
+                  <input class="pdp-input" type="password" id="f-pass" placeholder="Ingrese contraseña">
+                  <button type="button" class="pdp-pass-toggle" title="Mostrar/ocultar" onclick="togglePassword(this)">
+                    <span data-sap-icon="show"></span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="pdp-field">
+                <label class="pdp-label">RUT
+                  <span class="pdp-info" tabindex="0">
+                    <span class="pdp-info-icon" data-sap-icon="information"></span>
+                    <span class="pdp-tooltip">RUN chileno con dígito verificador. Se formatea automáticamente: 12.345.678-9</span>
+                  </span>
+                </label>
+                <input class="pdp-input" type="text" placeholder="12.345.678-9" maxlength="12" oninput="formatRUT(this)">
+              </div>
+
+              <div class="pdp-field">
+                <label class="pdp-label">Fecha</label>
+                <input class="pdp-input" type="date">
+              </div>
+
+              <div class="pdp-field">
+                <label class="pdp-label">Selector</label>
+                <div class="pdp-select-wrap">
+                  <select class="pdp-select" onchange="this.classList.toggle('has-value', !!this.value)">
+                    <option value="">Seleccione una categoría</option>
+                    <option value="ident">Datos de identificación</option>
+                    <option value="contacto">Datos de contacto</option>
+                    <option value="sensible">Datos sensibles</option>
+                    <option value="fin">Datos financieros</option>
+                  </select>
+                  <span class="sap-select-chevron">
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 3L5 7L9 3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
+              </div>
+
+              <div class="pdp-field col-span-2">
+                <label class="pdp-label">Texto largo (área de texto)</label>
+                <textarea class="pdp-textarea" placeholder="Ingrese una descripción detallada"></textarea>
+              </div>
+
+              <div class="pdp-field">
+                <label class="pdp-label">Adjunto</label>
+                <div class="pdp-attach">
+                  <label class="pdp-attach-btn">
+                    <span data-sap-icon="browse-folder"></span>
+                    Adjuntar archivo
+                    <input type="file" onchange="attachPick(this)">
+                  </label>
+                  <span class="pdp-attach-name empty">Ningún archivo seleccionado</span>
+                </div>
+              </div>
+
+              <div class="pdp-field">
+                <label class="pdp-label">Switch (on / off)</label>
+                <label class="pdp-check">
+                  <input type="checkbox">
+                  <span class="pdp-switch-track"></span>
+                  <span>Acepto el tratamiento de mis datos</span>
+                </label>
+              </div>
+
+              <div class="pdp-field">
+                <label class="pdp-label">Switch segmentado (selección excluyente)</label>
+                <div class="pdp-segmented" role="group" aria-label="Selección Sí o No">
+                  <button type="button" class="pdp-seg-btn" onclick="segSelect(this)">No</button>
+                  <button type="button" class="pdp-seg-btn" onclick="segSelect(this)">Sí</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /tab-demo-form -->
+
+      <!-- TAB: COMPORTAMIENTO -->
+      <div class="tab-panel" id="tab-behavior-form">
+        <div class="behavior-list">
+
+          <div class="behavior-item">
+            <div class="behavior-icon blue">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--blue)"><path d="M2 2.75A.75.75 0 0 1 2.75 2h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 2.75Zm0 3.5A.75.75 0 0 1 2.75 5.5h6a.75.75 0 0 1 0 1.5h-6A.75.75 0 0 1 2 6.25Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Título y subtítulo que envuelven los campos</strong>
+              <p>Todo formulario abre con un título y un subtítulo alineados a la izquierda. El subtítulo usa <code>--slate</code> (no azul, que se reserva para lo navegable). Estos textos enmarcan el conjunto de campos de la sección.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon warning">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--required)"><path d="M8 1a.75.75 0 0 1 .75.75v4.19l3.63-2.1a.75.75 0 1 1 .75 1.3L9.5 7.25l3.63 2.1a.75.75 0 0 1-.75 1.3l-3.63-2.1v4.2a.75.75 0 0 1-1.5 0v-4.2l-3.63 2.1a.75.75 0 1 1-.75-1.3l3.63-2.1-3.63-2.11a.75.75 0 0 1 .75-1.3l3.63 2.1V1.75A.75.75 0 0 1 8 1Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Label arriba, obligatorios con asterisco rojo</strong>
+              <p>El <em>label</em> siempre va sobre el input. Los campos obligatorios muestran un asterisco <span style="color:var(--required);font-weight:700">*</span> (<code>--required</code>) inmediatamente después del texto del label.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon slate">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--slate)"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM8 6.75a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 6.75ZM8 4a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Placeholder descriptivo y tooltip opcional</strong>
+              <p>Cada input lleva un placeholder en itálica que orienta sobre lo que se espera. Opcionalmente, un ícono de información junto al label despliega un tooltip con ayuda complementaria (ver campos <em>Responsable</em> y <em>RUT</em>).</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon green">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--success)"><path d="M2 3.75A.75.75 0 0 1 2.75 3h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 3.75ZM10 7.75a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5A.75.75 0 0 1 10 7.75Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Ubicación de las acciones — vista completa vs. modal</strong>
+              <p>En <strong>vista completa</strong> las acciones van en la cabecera de la sección, a la derecha del título. En <strong>modal</strong> van en el footer. En ambos casos el orden es <em>secundario(s) → principal</em>, con el principal siempre al extremo derecho. Botones típicos: <em>Cancelar/Volver</em>, <em>Guardar progreso</em>, <em>Finalizar/Guardar</em>.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon blue">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--blue)"><path d="M0 3.75A2.75 2.75 0 0 1 2.75 1h10.5A2.75 2.75 0 0 1 16 3.75v8.5A2.75 2.75 0 0 1 13.25 15H2.75A2.75 2.75 0 0 1 0 12.25v-8.5Zm2.75-1.25c-.69 0-1.25.56-1.25 1.25V5h13V3.75c0-.69-.56-1.25-1.25-1.25H2.75Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Validación de campos obligatorios</strong>
+              <p>Al intentar <em>Finalizar</em>, los campos obligatorios vacíos se marcan con borde rojo y un mensaje de error bajo el campo. (Pruébalo en el demo de vista completa dejando <em>Nombre</em> u <em>Objetivo</em> en blanco.)</p>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /tab-behavior-form -->
+
+      <!-- TAB: CÓDIGO SAPUI5 -->
+      <div class="tab-panel" id="tab-code-form">
+
+        <p class="code-label">XML View — SimpleForm (vista completa)</p>
+        <div class="code-block"><pre><span class="s">&lt;</span><span class="t">f:SimpleForm</span> <span class="a">layout</span><span class="s">="</span><span class="v">ResponsiveGridLayout</span><span class="s">"</span> <span class="a">columnsM</span><span class="s">="</span><span class="v">2</span><span class="s">"</span> <span class="a">editable</span><span class="s">="</span><span class="v">true</span><span class="s">"&gt;</span>
+  <span class="s">&lt;</span><span class="t">f:toolbar</span><span class="s">&gt;</span>
+    <span class="s">&lt;</span><span class="t">OverflowToolbar</span><span class="s">&gt;</span>
+      <span class="s">&lt;</span><span class="t">Title</span> <span class="a">text</span><span class="s">="</span><span class="v">Información del LIA</span><span class="s">" /&gt;</span>
+      <span class="s">&lt;</span><span class="t">ToolbarSpacer</span> <span class="s">/&gt;</span>
+      <span class="s">&lt;</span><span class="t">Button</span> <span class="a">text</span><span class="s">="</span><span class="v">Cancelar</span><span class="s">"</span> <span class="a">press</span><span class="s">="</span><span class="v">.onCancel</span><span class="s">" /&gt;</span>
+      <span class="s">&lt;</span><span class="t">Button</span> <span class="a">text</span><span class="s">="</span><span class="v">Guardar progreso</span><span class="s">"</span> <span class="a">press</span><span class="s">="</span><span class="v">.onSaveDraft</span><span class="s">" /&gt;</span>
+      <span class="s">&lt;</span><span class="t">Button</span> <span class="a">text</span><span class="s">="</span><span class="v">Finalizar</span><span class="s">"</span> <span class="a">type</span><span class="s">="</span><span class="v">Emphasized</span><span class="s">"</span> <span class="a">press</span><span class="s">="</span><span class="v">.onSubmit</span><span class="s">" /&gt;</span>
+    <span class="s">&lt;/</span><span class="t">OverflowToolbar</span><span class="s">&gt;</span>
+  <span class="s">&lt;/</span><span class="t">f:toolbar</span><span class="s">&gt;</span>
+
+  <span class="c">&lt;!-- Obligatorio: required="true" pinta el asterisco rojo --&gt;</span>
+  <span class="s">&lt;</span><span class="t">Label</span> <span class="a">text</span><span class="s">="</span><span class="v">Nombre</span><span class="s">"</span> <span class="a">required</span><span class="s">="</span><span class="v">true</span><span class="s">" /&gt;</span>
+  <span class="s">&lt;</span><span class="t">Input</span> <span class="a">value</span><span class="s">="</span><span class="v">{/nombre}</span><span class="s">"</span> <span class="a">placeholder</span><span class="s">="</span><span class="v">Ingrese nombre</span><span class="s">"</span>
+    <span class="a">required</span><span class="s">="</span><span class="v">true</span><span class="s">" /&gt;</span>
+
+  <span class="s">&lt;</span><span class="t">Label</span> <span class="a">text</span><span class="s">="</span><span class="v">Responsable</span><span class="s">" /&gt;</span>
+  <span class="s">&lt;</span><span class="t">Input</span> <span class="a">value</span><span class="s">="</span><span class="v">{/responsable}</span><span class="s">"</span>
+    <span class="a">placeholder</span><span class="s">="</span><span class="v">Ingrese responsable</span><span class="s">"</span>
+    <span class="a">tooltip</span><span class="s">="</span><span class="v">Escriba nombre completo y cargo</span><span class="s">" /&gt;</span>
+
+  <span class="s">&lt;</span><span class="t">Label</span> <span class="a">text</span><span class="s">="</span><span class="v">Objetivo</span><span class="s">"</span> <span class="a">required</span><span class="s">="</span><span class="v">true</span><span class="s">" /&gt;</span>
+  <span class="s">&lt;</span><span class="t">TextArea</span> <span class="a">value</span><span class="s">="</span><span class="v">{/objetivo}</span><span class="s">"</span> <span class="a">rows</span><span class="s">="</span><span class="v">4</span><span class="s">"</span>
+    <span class="a">placeholder</span><span class="s">="</span><span class="v">Ingrese objetivo</span><span class="s">"</span> <span class="a">required</span><span class="s">="</span><span class="v">true</span><span class="s">" /&gt;</span>
+<span class="s">&lt;/</span><span class="t">f:SimpleForm</span><span class="s">&gt;</span></pre></div>
+
+        <p class="code-label" style="margin-top:20px">XML Fragment — formulario en modal (Dialog)</p>
+        <div class="code-block"><pre><span class="s">&lt;</span><span class="t">Dialog</span> <span class="a">title</span><span class="s">="</span><span class="v">Vista previa del formulario</span><span class="s">"</span> <span class="a">contentWidth</span><span class="s">="</span><span class="v">680px</span><span class="s">"&gt;</span>
+  <span class="s">&lt;</span><span class="t">content</span><span class="s">&gt;</span>
+    <span class="s">&lt;</span><span class="t">f:SimpleForm</span> <span class="a">editable</span><span class="s">="</span><span class="v">true</span><span class="s">"&gt; ... &lt;/</span><span class="t">f:SimpleForm</span><span class="s">&gt;</span>
+  <span class="s">&lt;/</span><span class="t">content</span><span class="s">&gt;</span>
+
+  <span class="c">&lt;!-- Acciones en footer: secundario (begin) → principal (end) --&gt;</span>
+  <span class="s">&lt;</span><span class="t">beginButton</span><span class="s">&gt;</span>
+    <span class="s">&lt;</span><span class="t">Button</span> <span class="a">text</span><span class="s">="</span><span class="v">Cancelar</span><span class="s">"</span> <span class="a">press</span><span class="s">="</span><span class="v">.onClose</span><span class="s">" /&gt;</span>
+  <span class="s">&lt;/</span><span class="t">beginButton</span><span class="s">&gt;</span>
+  <span class="s">&lt;</span><span class="t">endButton</span><span class="s">&gt;</span>
+    <span class="s">&lt;</span><span class="t">Button</span> <span class="a">text</span><span class="s">="</span><span class="v">Guardar</span><span class="s">"</span> <span class="a">type</span><span class="s">="</span><span class="v">Emphasized</span><span class="s">"</span> <span class="a">press</span><span class="s">="</span><span class="v">.onSave</span><span class="s">" /&gt;</span>
+  <span class="s">&lt;/</span><span class="t">endButton</span><span class="s">&gt;</span>
+<span class="s">&lt;/</span><span class="t">Dialog</span><span class="s">&gt;</span></pre></div>
+
+        <p class="code-label" style="margin-top:20px">Tipos de campo → control SAPUI5</p>
+        <table class="prop-table">
+          <thead>
+            <tr><th>Tipo</th><th>Control</th><th>Notas</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Texto</td><td>sap.m.Input</td><td>type="Text"</td></tr>
+            <tr><td>Texto largo</td><td>sap.m.TextArea</td><td>rows / growing</td></tr>
+            <tr><td>Numérico</td><td>sap.m.Input</td><td>type="Number"</td></tr>
+            <tr><td>Email</td><td>sap.m.Input</td><td>type="Email"</td></tr>
+            <tr><td>Contraseña</td><td>sap.m.Input</td><td>type="Password"</td></tr>
+            <tr><td>RUT</td><td>sap.m.Input</td><td>maskInput / validador de DV chileno</td></tr>
+            <tr><td>Adjunto</td><td>sap.m.upload.UploadSet</td><td>o sap.ui.unified.FileUploader</td></tr>
+            <tr><td>Selector</td><td>sap.m.Select / ComboBox</td><td>ComboBox si requiere autocompletar</td></tr>
+            <tr><td>Fecha</td><td>sap.m.DatePicker</td><td>DateTimePicker para fecha+hora</td></tr>
+            <tr><td>Teléfono</td><td>sap.m.Input</td><td>type="Tel"</td></tr>
+            <tr><td>Checkbox / Switch</td><td>sap.m.CheckBox / Switch</td><td>booleanos, consentimientos</td></tr>
+            <tr><td>Opción única</td><td>sap.m.RadioButtonGroup</td><td>pocas opciones excluyentes</td></tr>
+            <tr><td>Selector múltiple</td><td>sap.m.MultiComboBox</td><td>tags / multivalor</td></tr>
+          </tbody>
+        </table>
+
+      </div><!-- /tab-code-form -->
+
+    </section><!-- /formularios -->
+
+  </main>
+</div>
+
+<!-- ============================================================
+     MODAL DEMO — Formulario en fragment
+============================================================ -->
+<div class="pdp-modal-overlay" id="formModal" onclick="if(event.target===this) closeFormModal()">
+  <div class="pdp-modal" role="dialog" aria-modal="true" aria-labelledby="formModalTitle">
+    <div class="pdp-modal-header">
+      <span class="pdp-modal-title" id="formModalTitle">Vista previa del formulario</span>
+      <button class="pdp-modal-close" title="Cerrar" onclick="closeFormModal()">
+        <svg viewBox="0 0 16 16"><path d="M9.06 8l4.47-4.47a.75.75 0 0 0-1.06-1.06L8 6.94 3.53 2.47a.75.75 0 0 0-1.06 1.06L6.94 8l-4.47 4.47a.75.75 0 1 0 1.06 1.06L8 9.06l4.47 4.47a.75.75 0 0 0 1.06-1.06L9.06 8Z"/></svg>
+      </button>
+    </div>
+    <div class="pdp-modal-body">
+
+      <div class="pdp-field" data-required>
+        <label class="pdp-label" for="m-nombre">Nombre del proceso de tratamiento <span class="pdp-required">*</span></label>
+        <input class="pdp-input" type="text" id="m-nombre" placeholder="Indica el nombre con el que se identifica este proceso dentro del área">
+      </div>
+
+      <div class="pdp-field" data-required>
+        <label class="pdp-label" for="m-correo">Correo del responsable del proceso <span class="pdp-required">*</span></label>
+        <input class="pdp-input" type="email" id="m-correo" placeholder="Correo de contacto de la persona responsable de este proceso">
+      </div>
+
+      <div class="pdp-field">
+        <label class="pdp-label" for="m-finalidad">Finalidad del tratamiento</label>
+        <textarea class="pdp-textarea" id="m-finalidad" placeholder="Describa la finalidad del tratamiento"></textarea>
+      </div>
+
+      <div class="pdp-field">
+        <label class="pdp-label" for="m-categoria">Categoría de datos tratados</label>
+        <div class="pdp-select-wrap">
+          <select class="pdp-select has-value" id="m-categoria" onchange="this.classList.toggle('has-value', !!this.value)">
+            <option value="ident" selected>Datos de identificación</option>
+            <option value="contacto">Datos de contacto</option>
+            <option value="sensible">Datos sensibles</option>
+            <option value="fin">Datos financieros</option>
+          </select>
+          <span class="sap-select-chevron">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 3L5 7L9 3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <div class="pdp-field">
+        <label class="pdp-label" for="m-resparea">Responsable del área</label>
+        <input class="pdp-input" type="text" id="m-resparea" placeholder="Nombre completo del responsable del área que realiza el tratamiento">
+      </div>
+
+    </div>
+    <div class="pdp-modal-footer">
+      <button class="pdp-btn-secondary" onclick="closeFormModal()">Cancelar</button>
+      <button class="pdp-btn-primary" onclick="showToast('Formulario guardado'); closeFormModal();">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<footer class="app-footer">
+  PDP Suite Design System &nbsp;·&nbsp; <span>v1.5.0</span> &nbsp;·&nbsp; 2026
+</footer>
+
+
+<!-- ============================================================
+     SCRIPTS
+============================================================ -->
+<script>
+  /* ── Render inline SVG icons ── */
+  function renderIcons() {
+    document.querySelectorAll('[data-sap-icon]').forEach(el => {
+      const name = el.dataset.sapIcon;
+      const path = SAP_ICONS[name];
+      if (!path) return;
+      el.innerHTML = `<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="${path}"/></svg>`;
+    });
+  }
+  document.addEventListener('DOMContentLoaded', renderIcons);
+
+  /* ── Copy to clipboard (URI) ── */
+  function copyCode(rowEl, text) {
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = rowEl.querySelector('.copy-btn');
+      const original = btn.textContent;
+      btn.textContent = '✓ Copiado';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = original; btn.classList.remove('copied'); }, 1800);
+    });
+  }
+
+  /* ── Copy to clipboard (hex) ── */
+  function copyHex(cardEl, hex) {
+    navigator.clipboard.writeText(hex).then(() => {
+      const pill = cardEl.querySelector('.copy-pill');
+      const original = pill.textContent;
+      pill.textContent = '✓ Copiado';
+      pill.classList.add('copied');
+      setTimeout(() => { pill.textContent = original; pill.classList.remove('copied'); }, 1500);
+    });
+  }
+
+  /* ── Filtro de iconos (local) ── */
+  function filterIcons(query) {
+    const q = query.toLowerCase().trim();
+    const cards = document.querySelectorAll('#iconografia .icon-card');
+    let visible = 0;
+
+    cards.forEach(card => {
+      const name = (card.dataset.name || '').toLowerCase();
+      const code = (card.querySelector('.uri-code')?.textContent || '').toLowerCase();
+      const match = !q || name.includes(q) || code.includes(q);
+      card.classList.toggle('hidden', !match);
+      if (match) visible++;
+    });
+
+    document.getElementById('iconCountBadge').textContent =
+      q ? `${visible} resultado${visible !== 1 ? 's' : ''}` : `${cards.length} iconos`;
+
+    document.querySelectorAll('#iconografia .icon-category').forEach(cat => {
+      const anyVisible = [...cat.querySelectorAll('.icon-card')].some(c => !c.classList.contains('hidden'));
+      cat.classList.toggle('hidden', !anyVisible);
+    });
+
+    document.getElementById('iconEmpty').style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  /* ── Demo data (Filtros) ── */
+  const DEMO_DATA = [
+    { nombre: "Tratamiento datos de clientes",   pais: "CL", paisNombre: "Chile",     estado: "activo" },
+    { nombre: "Nómina y gestión de empleados",   pais: "AR", paisNombre: "Argentina", estado: "activo" },
+    { nombre: "Consentimientos web y cookies",   pais: "CL", paisNombre: "Chile",     estado: "revision" },
+    { nombre: "Transferencia datos a terceros",  pais: "PE", paisNombre: "Perú",      estado: "activo" },
+    { nombre: "Marketing digital y CRM",         pais: "CO", paisNombre: "Colombia",  estado: "activo" },
+    { nombre: "Canal de denuncias interno",      pais: "MX", paisNombre: "México",    estado: "pendiente" },
+    { nombre: "Registro actividades de partners",pais: "CL", paisNombre: "Chile",     estado: "activo" },
+    { nombre: "Base legal operaciones regionales",pais: "BR",paisNombre: "Brasil",    estado: "revision" },
+  ];
+
+  const FLAGS = { CL:"🇨🇱", AR:"🇦🇷", BR:"🇧🇷", CO:"🇨🇴", MX:"🇲🇽", PE:"🇵🇪" };
+
+  const ESTADO_LABELS = {
+    activo:    { label: "Activo",      cls: "estado-activo" },
+    revision:  { label: "En revisión", cls: "estado-revision" },
+    pendiente: { label: "Pendiente",   cls: "estado-pendiente" },
+  };
+
+  function renderTable(data) {
+    const tbody = document.getElementById("demoTableBody");
+    const empty = document.getElementById("emptyState");
+    tbody.innerHTML = "";
+
+    if (data.length === 0) {
+      empty.style.display = "block";
+    } else {
+      empty.style.display = "none";
+      data.forEach(row => {
+        const e = ESTADO_LABELS[row.estado];
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.nombre}</td>
+          <td><span class="td-pais"><span class="flag">${FLAGS[row.pais]||""}</span>${row.paisNombre}</span></td>
+          <td><span class="estado-badge ${e.cls}">${e.label}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById("resultCount").textContent =
+      `Mostrando ${data.length} de ${DEMO_DATA.length} registros`;
+  }
+
+  renderTable(DEMO_DATA);
+
+  let filterTimeout = null;
+
+  function applyFilters() {
+    const nombre = document.getElementById("filterNombre").value.toLowerCase().trim();
+    const pais   = document.getElementById("filterPais").value;
+
+    const filtered = DEMO_DATA.filter(row => {
+      const matchNombre = !nombre || row.nombre.toLowerCase().includes(nombre);
+      const matchPais   = !pais   || row.pais === pais;
+      return matchNombre && matchPais;
+    });
+
+    renderTable(filtered);
+
+    const toast = document.getElementById("filterToast");
+    toast.classList.add("show");
+    clearTimeout(filterTimeout);
+    filterTimeout = setTimeout(() => toast.classList.remove("show"), 2000);
+  }
+
+  function checkClearBtn() {
+    const nombre = document.getElementById("filterNombre").value;
+    const pais   = document.getElementById("filterPais").value;
+    const btn    = document.getElementById("clearFiltersBtn");
+    const active = !!(nombre || pais);
+    btn.classList.toggle("is-active", active);
+    document.getElementById("filterPais").classList.toggle("has-value", !!pais);
+  }
+
+  function clearFilters() {
+    if (!document.getElementById("clearFiltersBtn").classList.contains("is-active")) return;
+    document.getElementById("filterNombre").value = "";
+    document.getElementById("filterPais").value   = "";
+    document.getElementById("filterPais").classList.remove("has-value");
+    checkClearBtn();
+    renderTable(DEMO_DATA);
+    document.getElementById("filterToast").classList.remove("show");
+  }
+
+  /* ============================================================
+     TABLAS — demo data + render + acciones
+  ============================================================ */
+  const FORM_DATA = [
+    { nombre: "Formulario de información personal",            descripcion: "",                                                                                          tipo: "RAT",          fecha: "16 jun 2026, 14:32" },
+    { nombre: "Registro de Actividad de Tratamiento Marketing", descripcion: "Formulario para documentar las actividades de tratamiento de datos personales del área de Marketing Digital, conforme a la Ley 21.719.", tipo: "RAT", fecha: "16 jun 2026, 09:15" },
+    { nombre: "Nuevo Formulario",                              descripcion: "Borrador inicial sin contenido definitivo",                                                 tipo: "RAT",          fecha: "15 jun 2026, 18:47" },
+    { nombre: "Canal de denuncias interno",                    descripcion: "Recepción y seguimiento de denuncias",                                                      tipo: "Denuncia",     fecha: "13 jun 2026, 11:03" },
+    { nombre: "Datos de selección de personas",                descripcion: "Información sobre candidatos a posiciones abiertas",                                          tipo: "RAT",          fecha: "10 jun 2026, 16:20" },
+    { nombre: "Plan anual de capacitación",                    descripcion: "Registro de capacitaciones en protección de datos",                                          tipo: "Capacitación", fecha: "2 jun 2026, 08:50" },
+    { nombre: "Formulario 23",                                 descripcion: "",                                                                                          tipo: "Consulta",     fecha: "29 may 2026, 13:12" },
+  ];
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c =>
+      ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]));
+  }
+
+  function renderFormTable() {
+    const tbody = document.getElementById("formTableBody");
+    if (!tbody) return;
+    tbody.innerHTML = "";
+
+    FORM_DATA.forEach((row, i) => {
+      const tr = document.createElement("tr");
+      const desc = row.descripcion
+        ? `<span class="pdp-desc" title="${escapeHtml(row.descripcion)}">${escapeHtml(row.descripcion)}</span>`
+        : `<span class="pdp-empty">-</span>`;
+      const tipo = row.tipo ? escapeHtml(row.tipo) : `<span class="pdp-empty">-</span>`;
+
+      tr.innerHTML = `
+        <td><span class="pdp-cell-strong">${escapeHtml(row.nombre)}</span></td>
+        <td>${desc}</td>
+        <td class="col-center">${tipo}</td>
+        <td class="col-center">${escapeHtml(row.fecha)}</td>
+        <td class="col-actions">
+          <span class="pdp-actions">
+            <button class="pdp-action-btn" title="Ver" onclick="formAction('Ver', ${i})"><span data-sap-icon="show"></span></button>
+            <button class="pdp-action-btn" title="Editar" onclick="formAction('Editar', ${i})"><span data-sap-icon="edit"></span></button>
+            <button class="pdp-action-btn danger" title="Eliminar" onclick="deleteForm(${i})"><span data-sap-icon="delete"></span></button>
+          </span>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    renderIcons();
+  }
+
+  function formAction(type, i) {
+    const row = FORM_DATA[i];
+    if (row) showToast(`${type}: ${row.nombre}`);
+  }
+
+  function deleteForm(i) {
+    const row = FORM_DATA[i];
+    if (!row) return;
+    FORM_DATA.splice(i, 1);
+    renderFormTable();
+    showToast(`Formulario eliminado: ${row.nombre}`);
+  }
+
+  /* ── Toast genérico ── */
+  let toastTimer = null;
+  function showToast(msg) {
+    let t = document.getElementById("pdpToast");
+    if (!t) {
+      t = document.createElement("div");
+      t.id = "pdpToast";
+      t.className = "pdp-toast";
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+  }
+
+  renderFormTable();
+
+  /* ============================================================
+     FORMULARIOS — utilidades de campos
+  ============================================================ */
+
+  /* RUT: formatea a 12.345.678-9 mientras se escribe */
+  function formatRUT(el) {
+    let v = el.value.replace(/[^0-9kK]/g, "").toUpperCase();
+    if (!v) { el.value = ""; return; }
+    const cuerpo = v.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    const dv = v.slice(-1);
+    el.value = cuerpo ? `${cuerpo}-${dv}` : dv;
+  }
+
+  /* Mostrar / ocultar contraseña */
+  function togglePassword(btn) {
+    const input = btn.closest(".pdp-input-wrap").querySelector(".pdp-input");
+    input.type = input.type === "password" ? "text" : "password";
+  }
+
+  /* Adjunto: muestra el nombre del archivo seleccionado */
+  function attachPick(input) {
+    const name = input.closest(".pdp-attach").querySelector(".pdp-attach-name");
+    if (input.files && input.files.length) {
+      name.textContent = input.files[0].name;
+      name.classList.remove("empty");
+    } else {
+      name.textContent = "Ningún archivo seleccionado";
+      name.classList.add("empty");
+    }
+  }
+
+  /* Validación de obligatorios al Finalizar (demo vista completa) */
+  function finalizarForm(e) {
+    e.preventDefault();
+    const form = document.getElementById("liaForm");
+    let ok = true;
+    form.querySelectorAll(".pdp-field[data-required]").forEach(field => {
+      const control = field.querySelector(".pdp-input, .pdp-textarea, .pdp-select");
+      const empty = !control.value.trim();
+      field.classList.toggle("has-error", empty);
+      if (empty) ok = false;
+    });
+    showToast(ok ? "Formulario finalizado correctamente" : "Revise los campos obligatorios");
+    return false;
+  }
+
+  /* Switch segmentado: selección excluyente dentro del grupo */
+  function segSelect(btn) {
+    btn.parentElement.querySelectorAll(".pdp-seg-btn").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+  }
+
+  /* Modal */
+  function openFormModal() {
+    document.getElementById("formModal").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeFormModal() {
+    document.getElementById("formModal").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeFormModal();
+  });
+
+  /* ── Tabs ── */
+  function switchTab(tabEl, panelId) {
+    const section = tabEl.closest(".component-section");
+    section.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    section.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+    tabEl.classList.add("active");
+    document.getElementById(panelId).classList.add("active");
+  }
+
+  /* ── Global search (secciones) ── */
+  function searchComponents(query) {
+    const q = query.toLowerCase().trim();
+    document.querySelectorAll(".component-section").forEach(section => {
+      if (!q) { section.classList.remove("hidden"); return; }
+      const keywords = section.dataset.searchKeywords || "";
+      const name = section.querySelector(".component-name")?.textContent.toLowerCase() || "";
+      const match = name.includes(q) || keywords.includes(q);
+      section.classList.toggle("hidden", !match);
+    });
+  }
+
+  /* ── Navegación sidebar ── */
+  function navTo(id) {
+    document.querySelectorAll('.nav-item[data-target]').forEach(n =>
+      n.classList.toggle('active', n.dataset.target === id));
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    return false;
+  }
+
+  /* ── Scroll-spy: resalta el nav según la sección visible ── */
+  const spy = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        document.querySelectorAll('.nav-item[data-target]').forEach(n =>
+          n.classList.toggle('active', n.dataset.target === id));
+      }
+    });
+  }, { rootMargin: "-76px 0px -70% 0px", threshold: 0 });
+
+  document.querySelectorAll('.component-section').forEach(s => spy.observe(s));
+</script>
+
+</body>
+</html>

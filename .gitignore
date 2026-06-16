@@ -1,0 +1,12 @@
+# Seguridad: nunca subir material confidencial
+*.pdf
+*.docx
+*.xlsx
+*.csv
+*.png
+*.jpg
+*.jpeg
+
+# Sistema
+.DS_Store
+Thumbs.db
