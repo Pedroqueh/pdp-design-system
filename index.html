@@ -782,15 +782,16 @@
       font-size: 12px; color: var(--slate); margin-top: 2px;
     }
 
+    /* Botón principal — fondo #0070F2, texto #F8FAFC, alto 32px */
     .pdp-btn-primary {
       font-family: inherit;
-      display: inline-flex; align-items: center; gap: 7px;
-      background: var(--blue); color: white;
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      height: 32px; padding: 0 16px;
+      background: var(--blue); color: var(--surface);
       border: none; border-radius: 8px;
-      padding: 8px 16px;
       font-size: 13px; font-weight: 600;
       cursor: pointer; white-space: nowrap;
-      transition: background 0.15s;
+      transition: background 0.15s, opacity 0.15s;
     }
 
     .pdp-btn-primary:hover { background: var(--blue-hover); }
@@ -898,17 +899,47 @@
     /* Acciones en cabecera (vista completa): secundario → principal, a la derecha */
     .pdp-form-actions { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 
+    /* Botón secundario — fondo #F8FAFC, texto #0070F2, alto 32px */
     .pdp-btn-secondary {
       font-family: inherit;
-      background: white; color: var(--blue);
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      height: 32px; padding: 0 16px;
+      background: var(--surface); color: var(--blue);
       border: 1px solid var(--border); border-radius: 8px;
-      padding: 8px 16px;
       font-size: 13px; font-weight: 600;
       cursor: pointer; white-space: nowrap;
       transition: background 0.15s, border-color 0.15s, color 0.15s;
     }
 
-    .pdp-btn-secondary:hover { background: var(--surface); border-color: #b3d4fc; color: var(--blue-hover); }
+    .pdp-btn-secondary:hover { background: var(--surface-2); border-color: #b3d4fc; color: var(--blue-hover); }
+    .pdp-btn-secondary svg { width: 13px; height: 13px; fill: currentColor; display: block; }
+
+    /* Botón ícono — sin fondo, ícono #0070F2 */
+    .pdp-btn-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+      background: none; border: none; border-radius: 8px;
+      color: var(--blue); cursor: pointer;
+      transition: background 0.15s, opacity 0.15s;
+    }
+    .pdp-btn-icon:hover { background: var(--blue-light); }
+    .pdp-btn-icon svg { width: 18px; height: 18px; fill: currentColor; display: block; }
+
+    /* Estado deshabilitado común */
+    .pdp-btn-primary:disabled,
+    .pdp-btn-secondary:disabled,
+    .pdp-btn-icon:disabled { opacity: 0.4; cursor: not-allowed; }
+    .pdp-btn-primary:disabled:hover { background: var(--blue); }
+    .pdp-btn-secondary:disabled:hover { background: var(--surface); border-color: var(--border); color: var(--blue); }
+    .pdp-btn-icon:disabled:hover { background: none; }
+
+    /* Showcase de botones */
+    .pdp-btn-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .pdp-btn-stack { display: flex; flex-direction: column; gap: 18px; }
+    .pdp-btn-group-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 10px;
+    }
 
     .pdp-form-body { padding: 24px; }
 
@@ -1282,7 +1313,7 @@
     <input type="text" id="globalSearch" placeholder="Buscar en el sistema..." oninput="searchComponents(this.value)">
   </div>
 
-  <span class="header-version">v1.5.0</span>
+  <span class="header-version">v1.6.0</span>
 </header>
 
 
@@ -1320,7 +1351,16 @@
 
     <div class="nav-section">
       <div class="nav-section-label">Componentes</div>
-      <a class="nav-item active" data-target="filtros" href="#filtros" onclick="return navTo('filtros')">
+      <a class="nav-item" data-target="botones" href="#botones" onclick="return navTo('botones')">
+        <span class="nav-icon">
+          <svg viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Z"/>
+          </svg>
+        </span>
+        Botones
+        <span class="nav-badge new">Nuevo</span>
+      </a>
+      <a class="nav-item" data-target="filtros" href="#filtros" onclick="return navTo('filtros')">
         <span class="nav-icon">
           <svg viewBox="0 0 16 16" fill="currentColor">
             <path d="M7 1a6 6 0 0 1 4.738 9.678l3.042 3.042a.75.75 0 1 1-1.06 1.06l-3.042-3.042A6 6 0 1 1 7 1Zm0 1.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"/>
@@ -1346,15 +1386,6 @@
         </span>
         Formularios
         <span class="nav-badge new">Nuevo</span>
-      </a>
-      <a class="nav-item" href="#" onclick="return false" style="opacity:0.45; cursor:not-allowed;">
-        <span class="nav-icon">
-          <svg viewBox="0 0 16 16" fill="currentColor">
-            <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Z"/>
-          </svg>
-        </span>
-        Botones
-        <span class="nav-badge">Pronto</span>
       </a>
       <a class="nav-item" href="#" onclick="return false" style="opacity:0.45; cursor:not-allowed;">
         <span class="nav-icon">
@@ -1778,6 +1809,183 @@
       <div class="icon-empty" id="iconEmpty">No se encontraron iconos para esa búsqueda.</div>
 
     </section><!-- /iconografia -->
+
+
+    <!-- =====================================================
+         COMPONENTE: BOTONES
+    ===================================================== -->
+    <section class="component-section" id="botones" data-search-keywords="botones boton button principal primario secundario icono emphasized accion altura 32 crear guardar cancelar">
+
+      <div class="component-header">
+        <div class="component-meta">
+          <span class="component-name">Botones</span>
+          <span class="component-badge">Estable</span>
+        </div>
+        <div class="accent-bar"></div>
+        <p class="component-desc">
+          PDP Suite usa tres tipos de botón con una altura recomendada de <strong>32px</strong>:
+          <strong>principal</strong> (fondo <code style="font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:3px">#0070F2</code>, texto <code style="font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:3px">#F8FAFC</code>),
+          <strong>secundario</strong> (fondo <code style="font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:3px">#F8FAFC</code>, texto <code style="font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:3px">#0070F2</code>)
+          e <strong>ícono</strong> (sin fondo, ícono <code style="font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:3px">#0070F2</code>).
+          En conjuntos de acción el orden es <em>secundario → principal</em>, con el principal a la derecha.
+        </p>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(this, 'tab-demo-btn')">Demo interactivo</div>
+        <div class="tab" onclick="switchTab(this, 'tab-behavior-btn')">Comportamiento</div>
+        <div class="tab" onclick="switchTab(this, 'tab-code-btn')">Uso en SAPUI5</div>
+      </div>
+
+      <!-- TAB: DEMO -->
+      <div class="tab-panel active" id="tab-demo-btn">
+        <div class="demo-canvas">
+          <div class="demo-canvas-toolbar">
+            <div class="demo-toolbar-dot" style="background:#ff5f57"></div>
+            <div class="demo-toolbar-dot" style="background:#febc2e"></div>
+            <div class="demo-toolbar-dot" style="background:#28c840"></div>
+            <span class="demo-canvas-label">Vista previa</span>
+          </div>
+          <div class="demo-canvas-body" style="padding:28px;">
+            <div class="pdp-btn-stack">
+
+              <!-- Tipos -->
+              <div>
+                <div class="pdp-btn-group-label">Tipos</div>
+                <div class="pdp-btn-row">
+                  <button class="pdp-btn-primary" onclick="showToast('Botón principal')">Botón principal</button>
+                  <button class="pdp-btn-secondary" onclick="showToast('Botón secundario')">Botón secundario</button>
+                  <button class="pdp-btn-icon" title="Ver" onclick="showToast('Botón ícono')"><span data-sap-icon="show"></span></button>
+                </div>
+              </div>
+
+              <!-- Estado deshabilitado -->
+              <div>
+                <div class="pdp-btn-group-label">Deshabilitado</div>
+                <div class="pdp-btn-row">
+                  <button class="pdp-btn-primary" disabled>Botón principal</button>
+                  <button class="pdp-btn-secondary" disabled>Botón secundario</button>
+                  <button class="pdp-btn-icon" disabled><span data-sap-icon="show"></span></button>
+                </div>
+              </div>
+
+              <!-- Conjunto de acción -->
+              <div>
+                <div class="pdp-btn-group-label">Conjunto de acción (orden secundario → principal)</div>
+                <div class="pdp-btn-row" style="justify-content:flex-end; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:14px 18px;">
+                  <button class="pdp-btn-secondary" onclick="showToast('Cancelar')">Cancelar</button>
+                  <button class="pdp-btn-secondary" onclick="showToast('Guardar progreso')">Guardar progreso</button>
+                  <button class="pdp-btn-primary" onclick="showToast('Finalizar')">Finalizar</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div><!-- /tab-demo-btn -->
+
+      <!-- TAB: COMPORTAMIENTO -->
+      <div class="tab-panel" id="tab-behavior-btn">
+        <div class="behavior-list">
+
+          <div class="behavior-item">
+            <div class="behavior-icon blue">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--blue)"><path d="M2 4.75A2.75 2.75 0 0 1 4.75 2h6.5A2.75 2.75 0 0 1 14 4.75v6.5A2.75 2.75 0 0 1 11.25 14h-6.5A2.75 2.75 0 0 1 2 11.25v-6.5Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Botón principal — una acción primaria por contexto</strong>
+              <p>Fondo <code>#0070F2</code> y texto <code>#F8FAFC</code>. Representa la acción más importante de la pantalla o sección (Guardar, Finalizar, Crear). Debe haber solo uno por grupo de acciones.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon slate">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--slate)"><path d="M4.75 2.5A2.25 2.25 0 0 0 2.5 4.75v6.5A2.25 2.25 0 0 0 4.75 13.5h6.5a2.25 2.25 0 0 0 2.25-2.25v-6.5A2.25 2.25 0 0 0 11.25 2.5h-6.5Zm0 1.5h6.5c.414 0 .75.336.75.75v6.5a.75.75 0 0 1-.75.75h-6.5a.75.75 0 0 1-.75-.75v-6.5a.75.75 0 0 1 .75-.75Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Botón secundario — acciones complementarias</strong>
+              <p>Fondo <code>#F8FAFC</code>, texto <code>#0070F2</code> y borde sutil. Para acciones de apoyo (Cancelar, Volver, Guardar progreso). Pueden coexistir varios en un mismo grupo.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon blue">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--blue)"><path d="M8.004 2c3.12 0 5.67 2.323 7.35 4.754.178.259.646.908.646 1.25 0 .341-.468.983-.646 1.242-1.68 2.43-4.23 4.754-7.35 4.754-3.12 0-5.67-2.323-7.35-4.754C.477 8.988 0 8.324 0 7.996c0-.331.476-.984.655-1.242C2.334 4.324 4.884 2 8.005 2Zm0 3.5a3.001 3.001 0 1 0 0 6.002 3.001 3.001 0 0 0 0-6.002Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Botón ícono — acciones compactas</strong>
+              <p>Sin fondo, ícono <code>#0070F2</code>. Para acciones por fila en tablas o barras con poco espacio (Ver, Editar, Eliminar). Siempre debe llevar <code>tooltip</code> para describir su función.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon green">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--success)"><path d="M1 4.75A.75.75 0 0 1 1.75 4h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 4.75Zm6 3.5A.75.75 0 0 1 7.75 7.5h6.5a.75.75 0 0 1 0 1.5h-6.5A.75.75 0 0 1 7 8.25Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Orden y altura</strong>
+              <p>Altura recomendada de <strong>32px</strong> para los tres tipos. En conjuntos de acción el orden es <em>secundario(s) → principal</em>, alineados a la derecha y con el principal en el extremo.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon slate">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--slate)"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm2.53 3.97a.75.75 0 0 1 0 1.06l-4 4a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 1 1 1.06-1.06l1.47 1.47 3.47-3.47a.75.75 0 0 1 1.06 0Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Estado deshabilitado</strong>
+              <p>Cuando una acción no está disponible, el botón mantiene su forma con opacidad reducida y cursor <code>not-allowed</code>, sin efecto hover.</p>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /tab-behavior-btn -->
+
+      <!-- TAB: CÓDIGO SAPUI5 -->
+      <div class="tab-panel" id="tab-code-btn">
+
+        <p class="code-label">XML View — tipos de botón</p>
+        <div class="code-block"><pre><span class="c">&lt;!-- Principal: fondo #0070F2, texto #F8FAFC --&gt;</span>
+<span class="s">&lt;</span><span class="t">Button</span> <span class="a">text</span><span class="s">="</span><span class="v">Finalizar</span><span class="s">"</span> <span class="a">type</span><span class="s">="</span><span class="v">Emphasized</span><span class="s">"</span> <span class="a">press</span><span class="s">="</span><span class="v">.onSubmit</span><span class="s">" /&gt;</span>
+
+<span class="c">&lt;!-- Secundario: fondo #F8FAFC, texto #0070F2 --&gt;</span>
+<span class="s">&lt;</span><span class="t">Button</span> <span class="a">text</span><span class="s">="</span><span class="v">Cancelar</span><span class="s">"</span> <span class="a">type</span><span class="s">="</span><span class="v">Default</span><span class="s">"</span> <span class="a">press</span><span class="s">="</span><span class="v">.onCancel</span><span class="s">" /&gt;</span>
+
+<span class="c">&lt;!-- Ícono: sin fondo, ícono #0070F2 (siempre con tooltip) --&gt;</span>
+<span class="s">&lt;</span><span class="t">Button</span> <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://show</span><span class="s">"</span> <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">"</span>
+  <span class="a">tooltip</span><span class="s">="</span><span class="v">Ver</span><span class="s">"</span> <span class="a">press</span><span class="s">="</span><span class="v">.onView</span><span class="s">" /&gt;</span></pre></div>
+
+        <p class="code-label" style="margin-top:20px">Tipo PDP → ButtonType SAPUI5</p>
+        <table class="prop-table">
+          <thead>
+            <tr><th>Tipo PDP</th><th>ButtonType</th><th>Uso</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Principal</td><td>Emphasized</td><td>Acción primaria, una por contexto</td></tr>
+            <tr><td>Secundario</td><td>Default</td><td>Acciones complementarias / Cancelar</td></tr>
+            <tr><td>Ícono</td><td>Transparent</td><td>Solo ícono + tooltip; acciones de fila</td></tr>
+          </tbody>
+        </table>
+
+        <p class="code-label" style="margin-top:20px">Tokens</p>
+        <table class="prop-table">
+          <thead>
+            <tr><th>Propiedad</th><th>Valor</th><th>Aplica a</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>background (principal)</td><td>#0070F2</td><td>--blue</td></tr>
+            <tr><td>color (principal)</td><td>#F8FAFC</td><td>--surface</td></tr>
+            <tr><td>background (secundario)</td><td>#F8FAFC</td><td>--surface</td></tr>
+            <tr><td>color (secundario / ícono)</td><td>#0070F2</td><td>--blue</td></tr>
+            <tr><td>height</td><td>32px</td><td>los tres tipos</td></tr>
+            <tr><td>border-radius</td><td>8px</td><td>principal / secundario</td></tr>
+          </tbody>
+        </table>
+
+      </div><!-- /tab-code-btn -->
+
+    </section><!-- /botones -->
 
 
     <!-- =====================================================
@@ -2644,7 +2852,7 @@
 </div>
 
 <footer class="app-footer">
-  PDP Suite Design System &nbsp;·&nbsp; <span>v1.5.0</span> &nbsp;·&nbsp; 2026
+  PDP Suite Design System &nbsp;·&nbsp; <span>v1.6.0</span> &nbsp;·&nbsp; 2026
 </footer>
 
 
