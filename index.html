@@ -28,7 +28,8 @@
       "alert":            "M6.491 1.856C7.17.716 8.821.714 9.5 1.855l6.249 10.504c.694 1.166-.147 2.644-1.504 2.644H1.752c-1.357 0-2.197-1.478-1.504-2.644L6.491 1.856Zm1.503 9.138a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm0-7a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0-1-1Z",
       "shield":           "M7.876.01a.75.75 0 0 1 .331.024l5.265 1.61a.75.75 0 0 1 .53.718V8c0 2.71-1.479 4.709-2.875 5.99a12.623 12.623 0 0 1-1.925 1.447c-.523.32-.702.404-.901.495a.751.751 0 0 1-.627 0c-.199-.092-.377-.175-.898-.496A12.567 12.567 0 0 1 4.86 13.99c-1.346-1.242-2.77-3.157-2.857-5.738l.006-6.012a.75.75 0 0 1 .52-.595L7.875.009ZM3.538 8.663c.208 1.803 1.24 3.21 2.338 4.223.481.444.965.8 1.374 1.07V9.371l-3.712-.707Zm5.212.708v4.574c.407-.27.886-.623 1.362-1.06 1.103-1.013 2.138-2.419 2.348-4.219l-3.71.705ZM3.498 2.915V7.13l3.752.715V1.761L3.498 2.916ZM8.75 7.843l3.752-.71V2.914L8.75 1.767v6.076Z",
       "end-user-experience-monitoring": "M12.608 12.438a.5.5 0 0 1 .83.554l-.972 1.755c.216.649-.317 1.253-.966 1.253a1 1 0 0 1-.144-1.99l1.252-1.572ZM11.5 9.5c2.432 0 4.5 1.858 4.5 4.25a.75.75 0 0 1-1.5 0c0-1.468-1.297-2.75-3-2.75s-3 1.282-3 2.75a.75.75 0 0 1-1.5 0c0-2.392 2.068-4.25 4.5-4.25ZM6 0a4 4 0 0 1 2.615 7.024c.373.167.734.372 1.073.617a.75.75 0 0 1-.876 1.217C7.852 8.163 7.13 8 5.798 8 3.418 8 1.5 9.911 1.5 12.25v.25h2.75a.75.75 0 0 1 0 1.5H.75a.75.75 0 0 1-.75-.75v-1c0-2.323 1.39-4.319 3.383-5.227A4 4 0 0 1 6 0Zm0 1.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z",
-      "information":      "M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 7a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0V8a1 1 0 0 0-1-1Zm0-4a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"
+      "information":      "M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 7a1 1 0 0 0-1 1v4a1 1 0 1 0 2 0V8a1 1 0 0 0-1-1Zm0-4a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z",
+      "chain-link":       "M4.302 6.107c1.538-1.533 3.943-1.432 5.476.11a.75.75 0 0 1-1.057 1.064c-.913-.93-2.395-1.076-3.362-.11l-.002.003L3.163 9.34a2.273 2.273 0 0 0 .003 3.212l.282.282a2.28 2.28 0 0 0 3.22 0 .75.75 0 0 1 1.06 1.062 3.78 3.78 0 0 1-5.34 0l-.282-.283a3.773 3.773 0 0 1 0-5.337l.002-.003 2.194-2.166Zm3.97-4.002a3.779 3.779 0 0 1 5.34 0l.283.282a3.774 3.774 0 0 1 0 5.337l-.008.007-1.865 1.807-.01.01c-2.087 1.949-4.55 1.617-5.69.815a.75.75 0 0 1 .864-1.226c.58.407 2.252.763 3.802-.685l1.848-1.792a2.273 2.273 0 0 0-.002-3.212l-.282-.283a2.28 2.28 0 0 0-3.219-.002l.001.001-.05.05a.75.75 0 0 1-1.06.002c-.329-.327-.278-.785.049-1.111Z"
     };
   </script>
 
@@ -261,6 +262,17 @@
       display: flex; align-items: center; gap: 10px;
       margin-bottom: 8px;
     }
+
+    /* Botón copiar enlace a la sección */
+    .pdp-copy-link {
+      width: 28px; height: 28px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: none; background: none; border-radius: 6px;
+      color: var(--text-muted); cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .pdp-copy-link:hover { background: var(--blue-light); color: var(--blue); }
+    .pdp-copy-link svg { width: 15px; height: 15px; fill: currentColor; display: block; }
 
     .component-name {
       font-size: 22px; font-weight: 700; color: var(--text-primary);
@@ -1371,7 +1383,7 @@
     <input type="text" id="globalSearch" placeholder="Buscar en el sistema..." oninput="searchComponents(this.value)">
   </div>
 
-  <span class="header-version">v1.8.0</span>
+  <span class="header-version">v1.9.0</span>
 </header>
 
 
@@ -1401,7 +1413,7 @@
           </svg>
         </span>
         Iconografía SAP
-        <span class="nav-badge">17</span>
+        <span class="nav-badge">18</span>
       </a>
     </div>
 
@@ -1486,6 +1498,7 @@
         <div class="component-meta">
           <span class="component-name">Colores</span>
           <span class="component-badge foundation">Fundación</span>
+          <button class="pdp-copy-link" title="Copiar enlace a esta sección" onclick="copySectionLink('colores')"><span data-sap-icon="chain-link"></span></button>
         </div>
         <div class="accent-bar"></div>
         <p class="component-desc">
@@ -1596,6 +1609,7 @@
         <div class="component-meta">
           <span class="component-name">Iconografía SAP</span>
           <span class="component-badge foundation">Fundación</span>
+          <button class="pdp-copy-link" title="Copiar enlace a esta sección" onclick="copySectionLink('iconografia')"><span data-sap-icon="chain-link"></span></button>
         </div>
         <div class="accent-bar"></div>
         <p class="component-desc">
@@ -1607,7 +1621,7 @@
 
       <div class="icon-toolbar">
         <input type="text" class="icon-search-input" id="iconSearch" placeholder="Buscar acción o icono..." oninput="filterIcons(this.value)">
-        <span class="icon-count-badge" id="iconCountBadge">17 iconos</span>
+        <span class="icon-count-badge" id="iconCountBadge">18 iconos</span>
       </div>
 
       <!-- CRUD -->
@@ -1664,6 +1678,19 @@
             <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">SearchField</span>
   <span class="a">placeholder</span><span class="s">="</span><span class="v">Buscar...</span><span class="s">"</span>
   <span class="a">showSearchButton</span><span class="s">="</span><span class="v">true</span><span class="s">" /&gt;</span></pre></div>
+          </div>
+
+          <div class="icon-card" data-name="copiar enlace compartir chain link url ancla seccion">
+            <div class="icon-card-top">
+              <div class="icon-preview"><div data-sap-icon="chain-link"></div></div>
+              <div class="icon-info"><div class="icon-action-name">Copiar enlace</div><div class="icon-action-desc">Compartir el enlace a una sección o recurso</div></div>
+            </div>
+            <div class="uri-row" onclick="copyCode(this, 'sap-icon://chain-link')"><code class="uri-code">sap-icon://chain-link</code><button class="copy-btn">Copiar</button></div>
+            <div class="usage-label">Uso en SAPUI5 / XML View</div>
+            <div class="usage-block"><pre><span class="s">&lt;</span><span class="t">Button</span>
+  <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://chain-link</span><span class="s">"</span>
+  <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">"</span>
+  <span class="a">tooltip</span><span class="s">="</span><span class="v">Copiar enlace</span><span class="s">" /&gt;</span></pre></div>
           </div>
 
         </div>
@@ -1878,6 +1905,7 @@
         <div class="component-meta">
           <span class="component-name">Botones</span>
           <span class="component-badge">Estable</span>
+          <button class="pdp-copy-link" title="Copiar enlace a esta sección" onclick="copySectionLink('botones')"><span data-sap-icon="chain-link"></span></button>
         </div>
         <div class="accent-bar"></div>
         <p class="component-desc">
@@ -2055,6 +2083,7 @@
         <div class="component-meta">
           <span class="component-name">Filtros</span>
           <span class="component-badge">Estable</span>
+          <button class="pdp-copy-link" title="Copiar enlace a esta sección" onclick="copySectionLink('filtros')"><span data-sap-icon="chain-link"></span></button>
         </div>
         <div class="accent-bar"></div>
         <p class="component-desc">
@@ -2331,6 +2360,7 @@
         <div class="component-meta">
           <span class="component-name">Tablas</span>
           <span class="component-badge">Estable</span>
+          <button class="pdp-copy-link" title="Copiar enlace a esta sección" onclick="copySectionLink('tablas')"><span data-sap-icon="chain-link"></span></button>
         </div>
         <div class="accent-bar"></div>
         <p class="component-desc">
@@ -2523,6 +2553,7 @@
         <div class="component-meta">
           <span class="component-name">Formularios</span>
           <span class="component-badge">Estable</span>
+          <button class="pdp-copy-link" title="Copiar enlace a esta sección" onclick="copySectionLink('formularios')"><span data-sap-icon="chain-link"></span></button>
         </div>
         <div class="accent-bar"></div>
         <p class="component-desc">
@@ -2882,6 +2913,7 @@
         <div class="component-meta">
           <span class="component-name">Mensajes</span>
           <span class="component-badge">Estable</span>
+          <button class="pdp-copy-link" title="Copiar enlace a esta sección" onclick="copySectionLink('mensajes')"><span data-sap-icon="chain-link"></span></button>
         </div>
         <div class="accent-bar"></div>
         <p class="component-desc">
@@ -3131,7 +3163,7 @@
 </div>
 
 <footer class="app-footer">
-  PDP Suite Design System &nbsp;·&nbsp; <span>v1.8.0</span> &nbsp;·&nbsp; 2026
+  PDP Suite Design System &nbsp;·&nbsp; <span>v1.9.0</span> &nbsp;·&nbsp; 2026
 </footer>
 
 
@@ -3578,8 +3610,32 @@
     document.querySelectorAll('.nav-item[data-target]').forEach(n =>
       n.classList.toggle('active', n.dataset.target === id));
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    history.replaceState(null, "", "#" + id);
     return false;
   }
+
+  /* ── Copiar enlace a una sección ── */
+  function copySectionLink(id) {
+    const url = location.origin + location.pathname + "#" + id;
+    history.replaceState(null, "", "#" + id);
+    navigator.clipboard.writeText(url).then(
+      () => showToast("Enlace copiado: #" + id),
+      () => showToast("No se pudo copiar el enlace")
+    );
+  }
+
+  /* ── Navegación por ancla (deep-link) ── */
+  function applyHash() {
+    const id = decodeURIComponent(location.hash.replace("#", ""));
+    if (!id) return;
+    const sec = document.getElementById(id);
+    if (!sec) return;
+    sec.scrollIntoView({ block: "start" });
+    document.querySelectorAll('.nav-item[data-target]').forEach(n =>
+      n.classList.toggle('active', n.dataset.target === id));
+  }
+  window.addEventListener("DOMContentLoaded", applyHash);
+  window.addEventListener("hashchange", applyHash);
 
   /* ── Scroll-spy: resalta el nav según la sección visible ── */
   const spy = new IntersectionObserver((entries) => {
