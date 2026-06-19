@@ -1141,6 +1141,62 @@
       .pdp-form-grid { grid-template-columns: 1fr; }
     }
 
+    .pdp-modal-overlay.pdp-overlay-center { align-items: center; }
+
+    /* ============================================================
+       PDP MESSAGE — modales de estado (Éxito / Error / Advertencia / Info)
+    ============================================================ */
+    .pdp-msg {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 520px;
+      box-shadow: 0 10px 30px rgba(5,10,22,0.12);
+    }
+
+    .pdp-msg-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 13px 20px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .pdp-msg-icon { display: flex; flex-shrink: 0; }
+    .pdp-msg-icon svg { width: 20px; height: 20px; display: block; }
+
+    .pdp-msg-title { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+
+    .pdp-msg-body {
+      padding: 18px 20px;
+      font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+    }
+
+    .pdp-msg-footer {
+      display: flex; justify-content: flex-end; gap: 10px;
+      padding: 12px 20px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    /* Acento + color de ícono por tipo (lógica de Iconos de Estado) */
+    .pdp-msg-success .pdp-msg-header { border-bottom-color: var(--success); }
+    .pdp-msg-success .pdp-msg-icon svg { fill: var(--success); }
+    .pdp-msg-error   .pdp-msg-header { border-bottom-color: var(--error); }
+    .pdp-msg-error   .pdp-msg-icon svg { fill: var(--error); }
+    .pdp-msg-warning .pdp-msg-header { border-bottom-color: var(--warning); }
+    .pdp-msg-warning .pdp-msg-icon svg { fill: var(--warning); }
+    .pdp-msg-info    .pdp-msg-header { border-bottom-color: var(--blue); }
+    .pdp-msg-info    .pdp-msg-icon svg { fill: var(--blue); }
+
+    /* Galería de previsualización inline */
+    .pdp-msg-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 18px;
+      align-items: start;
+    }
+
     /* ============================================================
        BEHAVIOR NOTES
     ============================================================ */
@@ -1313,7 +1369,7 @@
     <input type="text" id="globalSearch" placeholder="Buscar en el sistema..." oninput="searchComponents(this.value)">
   </div>
 
-  <span class="header-version">v1.6.0</span>
+  <span class="header-version">v1.7.0</span>
 </header>
 
 
@@ -1387,14 +1443,14 @@
         Formularios
         <span class="nav-badge new">Nuevo</span>
       </a>
-      <a class="nav-item" href="#" onclick="return false" style="opacity:0.45; cursor:not-allowed;">
+      <a class="nav-item" data-target="mensajes" href="#mensajes" onclick="return navTo('mensajes')">
         <span class="nav-icon">
           <svg viewBox="0 0 16 16" fill="currentColor">
             <path d="M6.491 1.856a1.75 1.75 0 0 1 3.01-.001l6.248 10.504c.694 1.166-.147 2.644-1.504 2.644H1.752c-1.357 0-2.197-1.478-1.504-2.644Z"/>
           </svg>
         </span>
         Mensajes
-        <span class="nav-badge">Pronto</span>
+        <span class="nav-badge new">Nuevo</span>
       </a>
     </div>
 
@@ -2792,7 +2848,206 @@
 
     </section><!-- /formularios -->
 
+
+    <!-- =====================================================
+         COMPONENTE: MENSAJES
+    ===================================================== -->
+    <section class="component-section" id="mensajes" data-search-keywords="mensajes mensaje modal dialogo dialog exito success error advertencia warning informativo informacion info confirmar messagebox notificacion alerta">
+
+      <div class="component-header">
+        <div class="component-meta">
+          <span class="component-name">Mensajes</span>
+          <span class="component-badge">Estable</span>
+        </div>
+        <div class="accent-bar"></div>
+        <p class="component-desc">
+          Modales de estado para comunicar el resultado de una acción o pedir confirmación. Hay cuatro tipos
+          —<strong>Éxito</strong>, <strong>Error</strong>, <strong>Advertencia</strong> e <strong>Informativo</strong>—
+          cada uno con el ícono y color semántico de los <em>Iconos de Estado</em> y una línea de acento bajo el título.
+          Los botones siguen el estándar de la Suite: <em>secundario → principal</em>, alineados a la derecha.
+        </p>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(this, 'tab-demo-msg')">Demo interactivo</div>
+        <div class="tab" onclick="switchTab(this, 'tab-behavior-msg')">Comportamiento</div>
+        <div class="tab" onclick="switchTab(this, 'tab-code-msg')">Uso en SAPUI5</div>
+      </div>
+
+      <!-- TAB: DEMO -->
+      <div class="tab-panel active" id="tab-demo-msg">
+        <div class="demo-canvas">
+          <div class="demo-canvas-toolbar">
+            <div class="demo-toolbar-dot" style="background:#ff5f57"></div>
+            <div class="demo-toolbar-dot" style="background:#febc2e"></div>
+            <div class="demo-toolbar-dot" style="background:#28c840"></div>
+            <span class="demo-canvas-label">Vista previa</span>
+          </div>
+          <div class="demo-canvas-body" style="padding:28px;">
+
+            <div class="pdp-btn-group-label">Abrir como modal</div>
+            <div class="pdp-btn-row" style="margin-bottom:26px;">
+              <button class="pdp-btn-secondary" onclick="openMsg('success')">Éxito</button>
+              <button class="pdp-btn-secondary" onclick="openMsg('error')">Error</button>
+              <button class="pdp-btn-secondary" onclick="openMsg('warning')">Advertencia</button>
+              <button class="pdp-btn-secondary" onclick="openMsg('info')">Informativo</button>
+            </div>
+
+            <div class="pdp-btn-group-label">Previsualización</div>
+            <div class="pdp-msg-gallery">
+
+              <div class="pdp-msg pdp-msg-success">
+                <div class="pdp-msg-header">
+                  <span class="pdp-msg-icon"><span data-sap-icon="message-success"></span></span>
+                  <span class="pdp-msg-title">Éxito</span>
+                </div>
+                <div class="pdp-msg-body">Gestión manual registrada. Revisa el mensaje y resuelve la solicitud para notificar al titular.</div>
+                <div class="pdp-msg-footer">
+                  <button class="pdp-btn-primary" onclick="showToast('OK')">OK</button>
+                </div>
+              </div>
+
+              <div class="pdp-msg pdp-msg-error">
+                <div class="pdp-msg-header">
+                  <span class="pdp-msg-icon"><span data-sap-icon="message-error"></span></span>
+                  <span class="pdp-msg-title">Error al rectificar</span>
+                </div>
+                <div class="pdp-msg-body">No existe mapeo de rectificación para: Interés comercial. Revise la vinculación Propósito → Sistema → Servicio.</div>
+                <div class="pdp-msg-footer">
+                  <button class="pdp-btn-primary" onclick="showToast('Cerrar')">Cerrar</button>
+                </div>
+              </div>
+
+              <div class="pdp-msg pdp-msg-warning">
+                <div class="pdp-msg-header">
+                  <span class="pdp-msg-icon"><span data-sap-icon="message-warning"></span></span>
+                  <span class="pdp-msg-title">Resolver solicitud</span>
+                </div>
+                <div class="pdp-msg-body">¿Está seguro de resolver la solicitud? Esto notificará al solicitante.</div>
+                <div class="pdp-msg-footer">
+                  <button class="pdp-btn-secondary" onclick="showToast('Cerrar')">Cerrar</button>
+                  <button class="pdp-btn-primary" onclick="showToast('Resolver')">Resolver</button>
+                </div>
+              </div>
+
+              <div class="pdp-msg pdp-msg-info">
+                <div class="pdp-msg-header">
+                  <span class="pdp-msg-icon"><span data-sap-icon="information"></span></span>
+                  <span class="pdp-msg-title">Información</span>
+                </div>
+                <div class="pdp-msg-body">El proceso de tratamiento fue actualizado por otro usuario. Refresque la vista para ver los últimos cambios.</div>
+                <div class="pdp-msg-footer">
+                  <button class="pdp-btn-primary" onclick="showToast('Entendido')">Entendido</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div><!-- /tab-demo-msg -->
+
+      <!-- TAB: COMPORTAMIENTO -->
+      <div class="tab-panel" id="tab-behavior-msg">
+        <div class="behavior-list">
+
+          <div class="behavior-item">
+            <div class="behavior-icon green">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--success)"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm1.68 4.262a.75.75 0 0 1 1.14.976l-3 3.5a.758.758 0 0 1-1.1.042l-1.5-1.5a.75.75 0 1 1 1.06-1.06l.927.926 2.474-2.884Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Tipo = ícono + color semántico</strong>
+              <p>Cada modal usa el ícono de estado correspondiente con su color: Éxito (<code>message-success</code>, verde), Error (<code>message-error</code>, rojo), Advertencia (<code>message-warning</code>, ámbar) e Informativo (<code>information</code>, azul). Una línea de acento bajo el título refuerza el tipo.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon blue">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--blue)"><path d="M1 4.75A.75.75 0 0 1 1.75 4h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 4.75Zm6 3.5A.75.75 0 0 1 7.75 7.5h6.5a.75.75 0 0 1 0 1.5h-6.5A.75.75 0 0 1 7 8.25Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Orden de botones: secundario → principal</strong>
+              <p>Las acciones van alineadas a la derecha en el footer, con el botón principal siempre en el extremo derecho. En confirmaciones: <em>Cerrar/Cancelar</em> (secundario) + acción (principal).</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon slate">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--slate)"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM8 6.75a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 6.75ZM8 4a1 1 0 1 1 0 2 1 1 0 0 1 0-2Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Una acción vs. confirmación</strong>
+              <p>Los mensajes de resultado (Éxito, Error, Informativo) suelen llevar un único botón principal (<em>OK</em>, <em>Cerrar</em>, <em>Entendido</em>). La Advertencia se usa para confirmar acciones reversibles/sensibles y lleva dos botones.</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon warning">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--warning)"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Cierre del modal</strong>
+              <p>El modal se cierra con su botón de acción, con la tecla <code>Esc</code> o haciendo clic en el fondo oscurecido. Bloquea el scroll de la página mientras está abierto.</p>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /tab-behavior-msg -->
+
+      <!-- TAB: CÓDIGO SAPUI5 -->
+      <div class="tab-panel" id="tab-code-msg">
+
+        <p class="code-label">Controller — sap.m.MessageBox</p>
+        <div class="code-block"><pre><span class="t">sap</span><span class="s">.</span><span class="t">ui</span><span class="s">.</span><span class="t">require</span><span class="s">([</span><span class="v">"sap/m/MessageBox"</span><span class="s">],</span> <span class="tx">function</span> <span class="s">(</span>MessageBox<span class="s">) {</span>
+
+  <span class="c">// Éxito</span>
+  MessageBox<span class="s">.</span><span class="t">success</span><span class="s">(</span><span class="v">"Gestión manual registrada."</span><span class="s">, {</span> title<span class="s">:</span> <span class="v">"Éxito"</span> <span class="s">});</span>
+
+  <span class="c">// Error</span>
+  MessageBox<span class="s">.</span><span class="t">error</span><span class="s">(</span><span class="v">"No existe mapeo de rectificación."</span><span class="s">, {</span>
+    title<span class="s">:</span> <span class="v">"Error al rectificar"</span> <span class="s">});</span>
+
+  <span class="c">// Informativo</span>
+  MessageBox<span class="s">.</span><span class="t">information</span><span class="s">(</span><span class="v">"El proceso fue actualizado por otro usuario."</span><span class="s">);</span>
+
+  <span class="c">// Advertencia / confirmación — orden: secundario → principal</span>
+  MessageBox<span class="s">.</span><span class="t">warning</span><span class="s">(</span><span class="v">"¿Está seguro de resolver la solicitud?"</span><span class="s">, {</span>
+    title<span class="s">:</span> <span class="v">"Resolver solicitud"</span><span class="s">,</span>
+    actions<span class="s">: [</span><span class="v">"Resolver"</span><span class="s">,</span> MessageBox<span class="s">.</span><span class="t">Action</span><span class="s">.</span><span class="t">CLOSE</span><span class="s">],</span>
+    emphasizedAction<span class="s">:</span> <span class="v">"Resolver"</span><span class="s">,</span>
+    onClose<span class="s">:</span> <span class="tx">function</span> <span class="s">(</span>sAction<span class="s">) { </span><span class="c">/* ... */</span> <span class="s">}</span>
+  <span class="s">});</span>
+
+<span class="s">});</span></pre></div>
+
+        <p class="code-label" style="margin-top:20px">Tipo PDP → MessageBox</p>
+        <table class="prop-table">
+          <thead>
+            <tr><th>Tipo</th><th>Método</th><th>Ícono</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Éxito</td><td>MessageBox.success</td><td>sap-icon://message-success</td></tr>
+            <tr><td>Error</td><td>MessageBox.error</td><td>sap-icon://message-error</td></tr>
+            <tr><td>Advertencia</td><td>MessageBox.warning</td><td>sap-icon://message-warning</td></tr>
+            <tr><td>Informativo</td><td>MessageBox.information</td><td>sap-icon://information</td></tr>
+          </tbody>
+        </table>
+        <p class="component-desc" style="margin-top:12px; font-size:12.5px;">
+          <strong>Nota:</strong> <code>emphasizedAction</code> marca el botón principal; el orden visual lo controla el tema (la Suite mantiene secundario → principal).
+        </p>
+
+      </div><!-- /tab-code-msg -->
+
+    </section><!-- /mensajes -->
+
   </main>
+</div>
+
+<!-- ============================================================
+     MODAL DEMO — Mensaje de estado
+============================================================ -->
+<div class="pdp-modal-overlay pdp-overlay-center" id="msgModal" onclick="if(event.target===this) closeMsg()">
+  <div class="pdp-msg" id="msgModalCard" role="alertdialog" aria-modal="true"></div>
 </div>
 
 <!-- ============================================================
@@ -2852,7 +3107,7 @@
 </div>
 
 <footer class="app-footer">
-  PDP Suite Design System &nbsp;·&nbsp; <span>v1.6.0</span> &nbsp;·&nbsp; 2026
+  PDP Suite Design System &nbsp;·&nbsp; <span>v1.7.0</span> &nbsp;·&nbsp; 2026
 </footer>
 
 
@@ -3146,8 +3401,64 @@
     document.body.style.overflow = "";
   }
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeFormModal();
+    if (e.key === "Escape") { closeFormModal(); closeMsg(); }
   });
+
+  /* ============================================================
+     MENSAJES — modales de estado
+  ============================================================ */
+  const MSG_TYPES = {
+    success: {
+      cls: "pdp-msg-success", icon: "message-success", title: "Éxito",
+      body: "Gestión manual registrada. Revisa el mensaje y resuelve la solicitud para notificar al titular.",
+      buttons: [{ label: "OK", type: "primary" }],
+    },
+    error: {
+      cls: "pdp-msg-error", icon: "message-error", title: "Error al rectificar",
+      body: "No existe mapeo de rectificación para: Interés comercial. Revise la vinculación Propósito → Sistema → Servicio.",
+      buttons: [{ label: "Cerrar", type: "primary" }],
+    },
+    warning: {
+      cls: "pdp-msg-warning", icon: "message-warning", title: "Resolver solicitud",
+      body: "¿Está seguro de resolver la solicitud? Esto notificará al solicitante.",
+      buttons: [{ label: "Cerrar", type: "secondary" }, { label: "Resolver", type: "primary" }],
+    },
+    info: {
+      cls: "pdp-msg-info", icon: "information", title: "Información",
+      body: "El proceso de tratamiento fue actualizado por otro usuario. Refresque la vista para ver los últimos cambios.",
+      buttons: [{ label: "Entendido", type: "primary" }],
+    },
+  };
+
+  function openMsg(type) {
+    const cfg = MSG_TYPES[type];
+    if (!cfg) return;
+    const card = document.getElementById("msgModalCard");
+    card.className = "pdp-msg " + cfg.cls;
+    const btns = cfg.buttons.map(b =>
+      `<button class="${b.type === "primary" ? "pdp-btn-primary" : "pdp-btn-secondary"}" onclick="msgAction('${b.label}')">${b.label}</button>`
+    ).join("");
+    card.innerHTML = `
+      <div class="pdp-msg-header">
+        <span class="pdp-msg-icon"><span data-sap-icon="${cfg.icon}"></span></span>
+        <span class="pdp-msg-title">${cfg.title}</span>
+      </div>
+      <div class="pdp-msg-body">${cfg.body}</div>
+      <div class="pdp-msg-footer">${btns}</div>`;
+    renderIcons();
+    document.getElementById("msgModal").classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeMsg() {
+    document.getElementById("msgModal").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  function msgAction(label) {
+    showToast(label);
+    closeMsg();
+  }
 
   /* ── Tabs ── */
   function switchTab(tabEl, panelId) {
