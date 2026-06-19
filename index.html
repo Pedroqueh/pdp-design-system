@@ -861,15 +861,16 @@
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
 
-    /* Grilla de acciones: columnas fijas para que los íconos alineen entre filas
-       aunque una fila tenga menos acciones (el hueco queda reservado). */
+    /* Grilla de acciones: columnas fijas (= máximo de acciones de la tabla) para
+       que los íconos alineen entre filas. Las 3 base van siempre; las extra a la
+       derecha y, si una fila no las tiene, su columna queda reservada vacía. */
     .pdp-actions {
       display: inline-grid;
-      grid-template-columns: repeat(3, 28px);
+      grid-auto-rows: 28px;
       gap: 4px;
       align-items: center;
+      justify-content: center;
     }
-    .pdp-action-slot { width: 28px; height: 28px; }
 
     .pdp-action-btn {
       width: 28px; height: 28px;
@@ -1401,7 +1402,7 @@
     <input type="text" id="globalSearch" placeholder="Buscar en el sistema..." oninput="searchComponents(this.value)">
   </div>
 
-  <span class="header-version">v1.9.5</span>
+  <span class="header-version">v1.9.6</span>
 </header>
 
 
@@ -2472,7 +2473,7 @@
             </div>
             <div class="behavior-text">
               <strong>Columna de acciones por fila</strong>
-              <p>Ofrece <em>Ver</em> (<code>sap-icon://show</code>), <em>Editar</em> (<code>sap-icon://edit</code>) y <em>Eliminar</em> (<code>sap-icon://delete</code>). La acción destructiva resalta en rojo al pasar el cursor. Los botones se disponen en una <strong>grilla de columnas fijas</strong>: si una fila no tiene cierta acción, su espacio queda reservado para que los íconos sigan alineados entre filas (ej.: las <em>Denuncia</em> no se pueden eliminar).</p>
+              <p>Las 3 acciones base van <strong>siempre</strong> y en este orden: <em>Ver</em> (<code>sap-icon://show</code>) → <em>Editar</em> (<code>sap-icon://edit</code>) → <em>Eliminar</em> (<code>sap-icon://delete</code>); la destructiva resalta en rojo al pasar el cursor. Pueden sumarse <strong>acciones extra</strong> a la derecha (ej.: <em>Publicar versión</em> con <code>sap-icon://generate-shortcut</code>, visible solo en filas tipo RAT). Todo se dispone en una <strong>grilla con columnas fijas</strong> (= al máximo de acciones de la tabla), por lo que los íconos quedan alineados entre filas aunque algunas tengan más acciones que otras.</p>
             </div>
           </div>
 
@@ -2540,6 +2541,9 @@
           <span class="s">&lt;</span><span class="t">Button</span> <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://show</span><span class="s">"</span>   <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" </span><span class="a">press</span><span class="s">="</span><span class="v">.onView</span><span class="s">" /&gt;</span>
           <span class="s">&lt;</span><span class="t">Button</span> <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://edit</span><span class="s">"</span>   <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" </span><span class="a">press</span><span class="s">="</span><span class="v">.onEdit</span><span class="s">" /&gt;</span>
           <span class="s">&lt;</span><span class="t">Button</span> <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://delete</span><span class="s">"</span> <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">" </span><span class="a">press</span><span class="s">="</span><span class="v">.onDelete</span><span class="s">" /&gt;</span>
+          <span class="c">&lt;!-- Acción extra opcional (a la derecha de las 3 base) --&gt;</span>
+          <span class="s">&lt;</span><span class="t">Button</span> <span class="a">icon</span><span class="s">="</span><span class="v">sap-icon://generate-shortcut</span><span class="s">"</span> <span class="a">type</span><span class="s">="</span><span class="v">Transparent</span><span class="s">"</span>
+            <span class="a">tooltip</span><span class="s">="</span><span class="v">Publicar versión</span><span class="s">"</span> <span class="a">visible</span><span class="s">="</span><span class="v">{= ${tipo} === 'RAT' }</span><span class="s">"</span> <span class="a">press</span><span class="s">="</span><span class="v">.onPublish</span><span class="s">" /&gt;</span>
         <span class="s">&lt;/</span><span class="t">HBox</span><span class="s">&gt;</span>
       <span class="s">&lt;/</span><span class="t">cells</span><span class="s">&gt;</span>
     <span class="s">&lt;/</span><span class="t">ColumnListItem</span><span class="s">&gt;</span>
@@ -3185,7 +3189,7 @@
 </div>
 
 <footer class="app-footer">
-  PDP Suite Design System &nbsp;·&nbsp; <span>v1.9.5</span> &nbsp;·&nbsp; 2026
+  PDP Suite Design System &nbsp;·&nbsp; <span>v1.9.6</span> &nbsp;·&nbsp; 2026
 </footer>
 
 
@@ -3360,6 +3364,9 @@
     if (!tbody) return;
     tbody.innerHTML = "";
 
+    // Columnas de la grilla = máximo de acciones de toda la tabla (3 base + extra)
+    const maxCols = 3 + Math.max(0, ...FORM_DATA.map(canPublish));
+
     FORM_DATA.forEach((row, i) => {
       const tr = document.createElement("tr");
       const desc = row.descripcion
@@ -3367,11 +3374,10 @@
         : `<span class="pdp-empty">-</span>`;
       const tipo = row.tipo ? escapeHtml(row.tipo) : `<span class="pdp-empty">-</span>`;
 
-      // Las Denuncias no se pueden eliminar (retención): el slot queda reservado
-      const canDelete = row.tipo !== "Denuncia";
-      const deleteCell = canDelete
-        ? `<button class="pdp-action-btn danger" title="Eliminar" onclick="deleteForm(${i})"><span data-sap-icon="delete"></span></button>`
-        : `<span class="pdp-action-slot" aria-hidden="true"></span>`;
+      // Base siempre presente: Ver → Editar → Eliminar. Extra a la derecha.
+      const publishBtn = canPublish(row)
+        ? `<button class="pdp-action-btn" title="Publicar versión" onclick="formAction('Publicar versión', ${i})"><span data-sap-icon="generate-shortcut"></span></button>`
+        : "";
 
       tr.innerHTML = `
         <td><span class="pdp-cell-strong">${escapeHtml(row.nombre)}</span></td>
@@ -3379,10 +3385,11 @@
         <td class="col-center">${tipo}</td>
         <td class="col-center">${escapeHtml(row.fecha)}</td>
         <td class="col-actions">
-          <span class="pdp-actions">
+          <span class="pdp-actions" style="grid-template-columns: repeat(${maxCols}, 28px)">
             <button class="pdp-action-btn" title="Ver" onclick="formAction('Ver', ${i})"><span data-sap-icon="show"></span></button>
             <button class="pdp-action-btn" title="Editar" onclick="formAction('Editar', ${i})"><span data-sap-icon="edit"></span></button>
-            ${deleteCell}
+            <button class="pdp-action-btn danger" title="Eliminar" onclick="deleteForm(${i})"><span data-sap-icon="delete"></span></button>
+            ${publishBtn}
           </span>
         </td>
       `;
@@ -3391,6 +3398,9 @@
 
     renderIcons();
   }
+
+  // Qué filas tienen la acción extra "Publicar versión" (ej.: solo RAT)
+  function canPublish(row) { return row.tipo === "RAT" ? 1 : 0; }
 
   function formAction(type, i) {
     const row = FORM_DATA[i];
