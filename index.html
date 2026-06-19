@@ -653,6 +653,16 @@
     .sap-filter-input:hover { box-shadow: var(--sap-field-shadow-hover); }
     .sap-filter-input:focus { box-shadow: var(--sap-field-shadow-focus); font-style: normal; }
 
+    /* Lupa decorativa a la derecha del input de búsqueda (estándar Suite) */
+    .sap-filter-input-wrap { position: relative; display: inline-block; }
+    .sap-filter-input-wrap .sap-filter-input { padding-right: 32px; }
+    .sap-filter-search-icon {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      pointer-events: none; color: var(--sap-placeholder);
+      display: flex; align-items: center;
+    }
+    .sap-filter-search-icon svg { width: 14px; height: 14px; fill: currentColor; display: block; }
+
     .sap-filter-select-wrap { position: relative; }
 
     .sap-filter-select {
@@ -1383,7 +1393,7 @@
     <input type="text" id="globalSearch" placeholder="Buscar en el sistema..." oninput="searchComponents(this.value)">
   </div>
 
-  <span class="header-version">v1.9.0</span>
+  <span class="header-version">v1.9.1</span>
 </header>
 
 
@@ -2117,14 +2127,17 @@
 
                 <div class="sap-filter-field">
                   <label class="sap-filter-label" for="filterNombre">Nombre:</label>
-                  <input
-                    class="sap-filter-input"
-                    type="text"
-                    id="filterNombre"
-                    placeholder="Buscar por nombre"
-                    onblur="applyFilters()"
-                    oninput="checkClearBtn()"
-                  >
+                  <div class="sap-filter-input-wrap">
+                    <input
+                      class="sap-filter-input"
+                      type="text"
+                      id="filterNombre"
+                      placeholder="Buscar por nombre"
+                      onblur="applyFilters()"
+                      oninput="checkClearBtn()"
+                    >
+                    <span class="sap-filter-search-icon" aria-hidden="true"><span data-sap-icon="search"></span></span>
+                  </div>
                 </div>
 
                 <div class="sap-filter-field">
@@ -2268,10 +2281,11 @@
       <span class="a">label</span><span class="s">="</span><span class="v">Nombre</span><span class="s">"</span>
       <span class="a">visibleInFilterBar</span><span class="s">="</span><span class="v">true</span><span class="s">"</span><span class="s">&gt;</span>
       <span class="s">&lt;</span><span class="t">filterBar:control</span><span class="s">&gt;</span>
-        <span class="s">&lt;</span><span class="t">Input</span>
+        <span class="c">&lt;!-- SearchField muestra la lupa nativamente --&gt;</span>
+        <span class="s">&lt;</span><span class="t">SearchField</span>
           <span class="a">id</span><span class="s">="</span><span class="v">inputNombre</span><span class="s">"</span>
           <span class="a">placeholder</span><span class="s">="</span><span class="v">Buscar por nombre</span><span class="s">"</span>
-          <span class="a">change</span><span class="s">="</span><span class="v">.onSearch</span><span class="s">" /&gt;</span>
+          <span class="a">search</span><span class="s">="</span><span class="v">.onSearch</span><span class="s">" /&gt;</span>
       <span class="s">&lt;/</span><span class="t">filterBar:control</span><span class="s">&gt;</span>
     <span class="s">&lt;/</span><span class="t">filterBar:FilterGroupItem</span><span class="s">&gt;</span>
 
@@ -3163,7 +3177,7 @@
 </div>
 
 <footer class="app-footer">
-  PDP Suite Design System &nbsp;·&nbsp; <span>v1.9.0</span> &nbsp;·&nbsp; 2026
+  PDP Suite Design System &nbsp;·&nbsp; <span>v1.9.1</span> &nbsp;·&nbsp; 2026
 </footer>
 
 
