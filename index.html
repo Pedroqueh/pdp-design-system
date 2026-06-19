@@ -1006,6 +1006,8 @@
     .pdp-field.has-error .pdp-select { box-shadow: inset 0 0 0 1px var(--error); }
     .pdp-field-error { font-size: 11px; color: var(--error); display: none; }
     .pdp-field.has-error .pdp-field-error { display: block; }
+    .pdp-field-hint { font-size: 11px; color: var(--text-muted); }
+    .pdp-field.has-error .pdp-field-hint { display: none; }
 
     /* Tooltip de ayuda */
     .pdp-info { position: relative; display: inline-flex; align-items: center; }
@@ -1369,7 +1371,7 @@
     <input type="text" id="globalSearch" placeholder="Buscar en el sistema..." oninput="searchComponents(this.value)">
   </div>
 
-  <span class="header-version">v1.7.0</span>
+  <span class="header-version">v1.8.0</span>
 </header>
 
 
@@ -2621,32 +2623,42 @@
 
               <div class="pdp-field">
                 <label class="pdp-label">Texto</label>
-                <input class="pdp-input" type="text" placeholder="Ingrese texto">
+                <input class="pdp-input" type="text" placeholder="Ingrese texto" oninput="filterText(this)">
+                <span class="pdp-field-hint">Solo letras y espacios — no acepta números.</span>
+                <span class="pdp-field-error">No se permiten números en este campo.</span>
               </div>
 
               <div class="pdp-field">
                 <label class="pdp-label">Numérico</label>
-                <input class="pdp-input" type="number" placeholder="Ingrese un número" min="0">
+                <input class="pdp-input" type="text" inputmode="numeric" placeholder="Ingrese un número" oninput="filterNumber(this)">
+                <span class="pdp-field-hint">Solo dígitos — no acepta texto.</span>
+                <span class="pdp-field-error">Solo se permiten números.</span>
               </div>
 
               <div class="pdp-field">
                 <label class="pdp-label">Email</label>
-                <input class="pdp-input" type="email" placeholder="nombre@empresa.cl">
+                <input class="pdp-input" type="email" placeholder="nombre@empresa.cl" oninput="clearFieldError(this)" onblur="validateEmail(this)">
+                <span class="pdp-field-hint">Formato: nombre@dominio.cl</span>
+                <span class="pdp-field-error">Ingrese un email válido (nombre@dominio.cl).</span>
               </div>
 
               <div class="pdp-field">
                 <label class="pdp-label">Teléfono</label>
-                <input class="pdp-input" type="tel" placeholder="+56 9 1234 5678">
+                <input class="pdp-input" type="tel" placeholder="+56 9 1234 5678" oninput="filterPhone(this)">
+                <span class="pdp-field-hint">Números y símbolos + ( ) - únicamente.</span>
+                <span class="pdp-field-error">Carácter no permitido.</span>
               </div>
 
               <div class="pdp-field">
                 <label class="pdp-label">Contraseña</label>
                 <div class="pdp-input-wrap">
-                  <input class="pdp-input" type="password" id="f-pass" placeholder="Ingrese contraseña">
+                  <input class="pdp-input" type="password" id="f-pass" placeholder="Ingrese contraseña" oninput="clearFieldError(this)" onblur="validatePassword(this)">
                   <button type="button" class="pdp-pass-toggle" title="Mostrar/ocultar" onclick="togglePassword(this)">
                     <span data-sap-icon="show"></span>
                   </button>
                 </div>
+                <span class="pdp-field-hint">Mínimo 8 caracteres.</span>
+                <span class="pdp-field-error">La contraseña debe tener al menos 8 caracteres.</span>
               </div>
 
               <div class="pdp-field">
@@ -2656,7 +2668,9 @@
                     <span class="pdp-tooltip">RUN chileno con dígito verificador. Se formatea automáticamente: 12.345.678-9</span>
                   </span>
                 </label>
-                <input class="pdp-input" type="text" placeholder="12.345.678-9" maxlength="12" oninput="formatRUT(this)">
+                <input class="pdp-input" type="text" placeholder="12.345.678-9" maxlength="12" inputmode="text" oninput="formatRUT(this); clearFieldError(this)" onblur="validateRUT(this)">
+                <span class="pdp-field-hint">Escriba solo números y el dígito verificador; los puntos y el guion se agregan solos.</span>
+                <span class="pdp-field-error">RUT inválido — verifique el dígito verificador.</span>
               </div>
 
               <div class="pdp-field">
@@ -2771,6 +2785,16 @@
             <div class="behavior-text">
               <strong>Validación de campos obligatorios</strong>
               <p>Al intentar <em>Finalizar</em>, los campos obligatorios vacíos se marcan con borde rojo y un mensaje de error bajo el campo. (Pruébalo en el demo de vista completa dejando <em>Nombre</em> u <em>Objetivo</em> en blanco.)</p>
+            </div>
+          </div>
+
+          <div class="behavior-item">
+            <div class="behavior-icon green">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="var(--success)"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0Zm0 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13Zm1.68 4.262a.75.75 0 0 1 1.14.976l-3 3.5a.758.758 0 0 1-1.1.042l-1.5-1.5a.75.75 0 1 1 1.06-1.06l.927.926 2.474-2.884Z"/></svg>
+            </div>
+            <div class="behavior-text">
+              <strong>Validación por tipo de campo</strong>
+              <p>Cada tipo aplica su propia regla (pruébalo en el <em>Catálogo de tipos de campo</em>): <strong>Texto</strong> bloquea números en vivo; <strong>Numérico</strong> solo acepta dígitos; <strong>Teléfono</strong> admite dígitos y <code>+ ( ) -</code>; <strong>RUT</strong> se autoformatea (puntos y guion) y valida el dígito verificador; <strong>Email</strong> y <strong>Contraseña</strong> validan formato y largo al perder el foco. Un texto de ayuda describe la regla y el error aparece solo cuando corresponde.</p>
             </div>
           </div>
 
@@ -3107,7 +3131,7 @@
 </div>
 
 <footer class="app-footer">
-  PDP Suite Design System &nbsp;·&nbsp; <span>v1.7.0</span> &nbsp;·&nbsp; 2026
+  PDP Suite Design System &nbsp;·&nbsp; <span>v1.8.0</span> &nbsp;·&nbsp; 2026
 </footer>
 
 
@@ -3343,6 +3367,54 @@
      FORMULARIOS — utilidades de campos
   ============================================================ */
 
+  /* Helpers de validación de campos */
+  function setFieldError(el, on) {
+    el.closest(".pdp-field").classList.toggle("has-error", on);
+  }
+  function clearFieldError(el) { setFieldError(el, false); }
+
+  /* Marca error transitorio cuando se filtra un carácter no permitido */
+  function flagStrip(el, stripped) {
+    if (!stripped) return;
+    setFieldError(el, true);
+    clearTimeout(el._stripTimer);
+    el._stripTimer = setTimeout(() => setFieldError(el, false), 1400);
+  }
+
+  /* Texto: bloquea números en vivo */
+  function filterText(el) {
+    const clean = el.value.replace(/[0-9]/g, "");
+    flagStrip(el, clean !== el.value);
+    el.value = clean;
+  }
+
+  /* Numérico: solo dígitos en vivo */
+  function filterNumber(el) {
+    const clean = el.value.replace(/[^0-9]/g, "");
+    flagStrip(el, clean !== el.value);
+    el.value = clean;
+  }
+
+  /* Teléfono: dígitos y símbolos + ( ) - y espacios */
+  function filterPhone(el) {
+    const clean = el.value.replace(/[^0-9+()\-\s]/g, "");
+    flagStrip(el, clean !== el.value);
+    el.value = clean;
+  }
+
+  /* Email: valida formato al perder foco */
+  function validateEmail(el) {
+    const v = el.value.trim();
+    const ok = !v || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    setFieldError(el, !ok);
+  }
+
+  /* Contraseña: mínimo 8 caracteres al perder foco */
+  function validatePassword(el) {
+    const v = el.value;
+    setFieldError(el, !!v && v.length < 8);
+  }
+
   /* RUT: formatea a 12.345.678-9 mientras se escribe */
   function formatRUT(el) {
     let v = el.value.replace(/[^0-9kK]/g, "").toUpperCase();
@@ -3350,6 +3422,26 @@
     const cuerpo = v.slice(0, -1).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     const dv = v.slice(-1);
     el.value = cuerpo ? `${cuerpo}-${dv}` : dv;
+  }
+
+  /* RUT: dígito verificador (módulo 11) */
+  function rutDV(cuerpo) {
+    let sum = 0, mul = 2;
+    for (let i = cuerpo.length - 1; i >= 0; i--) {
+      sum += parseInt(cuerpo[i], 10) * mul;
+      mul = mul === 7 ? 2 : mul + 1;
+    }
+    const res = 11 - (sum % 11);
+    return res === 11 ? "0" : res === 10 ? "K" : String(res);
+  }
+
+  /* RUT: valida cuerpo + dígito verificador al perder foco */
+  function validateRUT(el) {
+    const v = el.value.replace(/[.\-]/g, "").toUpperCase();
+    if (!v) { setFieldError(el, false); return; }
+    const cuerpo = v.slice(0, -1), dv = v.slice(-1);
+    const ok = cuerpo.length >= 7 && /^\d+$/.test(cuerpo) && rutDV(cuerpo) === dv;
+    setFieldError(el, !ok);
   }
 
   /* Mostrar / ocultar contraseña */
