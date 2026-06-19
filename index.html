@@ -861,7 +861,15 @@
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
 
-    .pdp-actions { display: inline-flex; align-items: center; gap: 4px; }
+    /* Grilla de acciones: columnas fijas para que los íconos alineen entre filas
+       aunque una fila tenga menos acciones (el hueco queda reservado). */
+    .pdp-actions {
+      display: inline-grid;
+      grid-template-columns: repeat(3, 28px);
+      gap: 4px;
+      align-items: center;
+    }
+    .pdp-action-slot { width: 28px; height: 28px; }
 
     .pdp-action-btn {
       width: 28px; height: 28px;
@@ -1393,7 +1401,7 @@
     <input type="text" id="globalSearch" placeholder="Buscar en el sistema..." oninput="searchComponents(this.value)">
   </div>
 
-  <span class="header-version">v1.9.4</span>
+  <span class="header-version">v1.9.5</span>
 </header>
 
 
@@ -2464,7 +2472,7 @@
             </div>
             <div class="behavior-text">
               <strong>Columna de acciones por fila</strong>
-              <p>Alineada a la derecha, ofrece <em>Ver</em> (<code>sap-icon://show</code>), <em>Editar</em> (<code>sap-icon://edit</code>) y <em>Eliminar</em> (<code>sap-icon://delete</code>). La acción destructiva resalta en rojo al pasar el cursor.</p>
+              <p>Ofrece <em>Ver</em> (<code>sap-icon://show</code>), <em>Editar</em> (<code>sap-icon://edit</code>) y <em>Eliminar</em> (<code>sap-icon://delete</code>). La acción destructiva resalta en rojo al pasar el cursor. Los botones se disponen en una <strong>grilla de columnas fijas</strong>: si una fila no tiene cierta acción, su espacio queda reservado para que los íconos sigan alineados entre filas (ej.: las <em>Denuncia</em> no se pueden eliminar).</p>
             </div>
           </div>
 
@@ -3177,7 +3185,7 @@
 </div>
 
 <footer class="app-footer">
-  PDP Suite Design System &nbsp;·&nbsp; <span>v1.9.4</span> &nbsp;·&nbsp; 2026
+  PDP Suite Design System &nbsp;·&nbsp; <span>v1.9.5</span> &nbsp;·&nbsp; 2026
 </footer>
 
 
@@ -3359,6 +3367,12 @@
         : `<span class="pdp-empty">-</span>`;
       const tipo = row.tipo ? escapeHtml(row.tipo) : `<span class="pdp-empty">-</span>`;
 
+      // Las Denuncias no se pueden eliminar (retención): el slot queda reservado
+      const canDelete = row.tipo !== "Denuncia";
+      const deleteCell = canDelete
+        ? `<button class="pdp-action-btn danger" title="Eliminar" onclick="deleteForm(${i})"><span data-sap-icon="delete"></span></button>`
+        : `<span class="pdp-action-slot" aria-hidden="true"></span>`;
+
       tr.innerHTML = `
         <td><span class="pdp-cell-strong">${escapeHtml(row.nombre)}</span></td>
         <td>${desc}</td>
@@ -3368,7 +3382,7 @@
           <span class="pdp-actions">
             <button class="pdp-action-btn" title="Ver" onclick="formAction('Ver', ${i})"><span data-sap-icon="show"></span></button>
             <button class="pdp-action-btn" title="Editar" onclick="formAction('Editar', ${i})"><span data-sap-icon="edit"></span></button>
-            <button class="pdp-action-btn danger" title="Eliminar" onclick="deleteForm(${i})"><span data-sap-icon="delete"></span></button>
+            ${deleteCell}
           </span>
         </td>
       `;
